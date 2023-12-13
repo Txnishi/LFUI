@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react'
 import * as echarts from 'echarts'
 import axios from "axios";
 
-const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
+const StatisticsChart = ({ value: dateValue, selectedOptionId: sensorId }) => {
     const [actualData, setActualData] = useState([]);
     const [predictedData, setPredictedData] = useState([]);
 
@@ -25,47 +25,49 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
     //     const actualData = collectedData.actual_data.map((data)=> {
     //         return data.act_kwh;
     //     });
-        
+
     //     console.log("actualData",actualData)
     //     setActualData(actualData);
-        
-        
+
+
     //     const predictedData = collectedData.predicted_data.map((data)=>{
     //         return data.pre_kwh;
     //     });
     //     console.log("prediectData",predictedData);
     //     setPredictedData(predictedData);
-        
+
     // } 
 
     // useEffect(() =>{
     //     chartData();
     // }, [senId, date]);
 
-    
-  useEffect(() => {
-    const chartData = async () => {
-      try {
-        const res = await axios.get(`http://13.127.57.185:5000/getPredData?id=${senId}&date=${date}`);
-        const collectedData = res.data.data;
-        const actualData = collectedData.actual_data.map((data) => data.act_kwh);
-        const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
-        setActualData(actualData);
-        setPredictedData(predictedData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
 
-    chartData();
-    // Update the chart key whenever selectedOptionId or dateValue changes
-    setChartKey(`${senId}-${date}`);
-  }, [date, senId]);
+    useEffect(() => {
+        const chartData = async () => {
+            try {
+                const res = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`);
+                const collectedData = res.data.data;
+                const actualData = collectedData.actual_data.map((data) => data.act_kwh);
+                const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
+                setActualData(actualData);
+                setPredictedData(predictedData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        chartData();
+        // Update the chart key whenever selectedOptionId or dateValue changes
+        setChartKey(`${senId}-${date}`);
+    }, [date, senId]);
+
+
 
     const option = {
         color: ['var(--orange)'],
         animationDuration: 3500,
-        
+
 
         toolbox: {
             feature: {
@@ -84,14 +86,14 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
         grid: {
             left: "3%",
             right: "4%",
-            bottom: "7%",            
+            bottom: "7%",
             containLabel: false,
             show: true,
         },
 
         xAxis: [
             {
-                
+
                 type: "category",
                 name: "Hours",
                 nameTextStyle: {
@@ -103,9 +105,9 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
                     fontSize: 12, // Adjust the font size as needed
                 },
                 boundaryGap: false,
-                data: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18","19", "20", "21", "22", "23"],
+                data: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
             }
-            
+
         ],
         yAxis: [
             {
@@ -113,7 +115,7 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
                 splitLine: {
                     show: false,
                 },
-                name: 'Units Consumed', 
+                name: 'Units Consumed',
                 nameTextStyle: {
                     fontSize: 15, // Adjust the font size as needed
                     color: '#979A9A',
@@ -122,7 +124,7 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
                     color: '#979A9A', // Set the color of the data values
                     fontSize: 12, // Adjust the font size as needed
                 },
-                
+
             }
         ],
 
@@ -205,6 +207,12 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
                 name: "Actual Power usage",
                 type: "line",
                 smooth: true,
+                label: {
+                    show: true,
+                    position: 'top',
+                    color: 'orange',
+                    fontSize: '20px'
+                },
                 lineStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 0.7, [
                         {
@@ -217,7 +225,7 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
                         }
                     ]),
                     width: 4
-                },                
+                },
                 areaStyle: {
                     opacity: .5,
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -242,6 +250,12 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
                 name: "Predicted Power usage",
                 type: "line",
                 smooth: true,
+                label: {
+                    show: true,
+                    position: 'down',
+                    color: 'white',
+                    fontSize: '16px'
+                },
                 lineStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                         {
