@@ -7,44 +7,64 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
     const [actualData, setActualData] = useState([]);
     const [predictedData, setPredictedData] = useState([]);
 
+    const [chartKey, setChartKey] = useState('');
+
     const date = dateValue;
     const senId = sensorId;
 
-    // const key = useMemo(() => `${selectedOptionId}-${dateValue}`, [selectedOptionId, dateValue]);
+    // const chartData = async() => {
 
-    const chartData = async() => {
+    //     const res = await axios.get(
+    //         // `http://13.127.57.185:5000/getPredData?id=5f718c439c7a78.65267835&date=${date}`
+    //         `http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`
+    //     );
 
-        const res = await axios.get(
-            // `http://13.127.57.185:5000/getPredData?id=5f718c439c7a78.65267835&date=${date}`
-            `http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`
-        );
+    //     const collectedData = res.data.data;
+    //         console.log(collectedData)
 
+    //     const actualData = collectedData.actual_data.map((data)=> {
+    //         return data.act_kwh;
+    //     });
+        
+    //     console.log("actualData",actualData)
+    //     setActualData(actualData);
+        
+        
+    //     const predictedData = collectedData.predicted_data.map((data)=>{
+    //         return data.pre_kwh;
+    //     });
+    //     console.log("prediectData",predictedData);
+    //     setPredictedData(predictedData);
+        
+    // } 
+
+    // useEffect(() =>{
+    //     chartData();
+    // }, [senId, date]);
+
+    
+  useEffect(() => {
+    const chartData = async () => {
+      try {
+        const res = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`);
         const collectedData = res.data.data;
-            console.log(collectedData)
-
-        const actualData = collectedData.actual_data.map((data)=> {
-            return data.act_kwh;
-        });
-        
-        console.log("actualData",actualData)
+        const actualData = collectedData.actual_data.map((data) => data.act_kwh);
+        const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
         setActualData(actualData);
-        
-        
-        const predictedData = collectedData.predicted_data.map((data)=>{
-            return data.pre_kwh;
-        });
-        console.log("prediectData",predictedData);
         setPredictedData(predictedData);
-        
-    } 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    useEffect(() =>{
-        chartData();
-    }, [date, senId]);
+    chartData();
+    // Update the chart key whenever selectedOptionId or dateValue changes
+    setChartKey(`${senId}-${date}`);
+  }, [date, senId]);
 
     const option = {
         color: ['var(--orange)'],
-        animationDuration: 6000,
+        animationDuration: 3500,
         
 
         toolbox: {
@@ -259,7 +279,7 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
     }
 
     return (
-        <ReactECharts option={option}
+        <ReactECharts option={option} key={chartKey}
         />
     )
 }

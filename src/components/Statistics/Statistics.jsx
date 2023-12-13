@@ -9,7 +9,9 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import axios from "axios";
+
 
 
 
@@ -74,15 +76,20 @@ const Statistics = () => {
                             ))}
                         </select>
                     </div>
+
                     {/* <div className={css.card}> */}
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <DatePicker
-                                value={value}
-                                onChange={(newValue) => setValue(newValue)}
-                                className={`${css.datePicker}`}
-                                format="DD-MM-YYYY" 
-                            />
-                        </LocalizationProvider>
+
+                            <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                <DatePicker
+                                    value={value}
+                                    onChange={(newValue) => setValue(newValue)}
+                                    className={`${css.datePicker}`}
+                                    format="DD-MM-YYYY" 
+                                />
+                            </LocalizationProvider>
+
+                      
+                
                     {/* </div> */}
 {/* 
                     <div className={css.arrowIcon}>

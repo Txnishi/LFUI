@@ -41,16 +41,18 @@
 }
 
 .datePicker {
-  background-color: white;
+  background: var(--orange-gradient);
   border-radius: 19px;
 }
+
 
 .card > select{
     border: none;
     background: var(--orange-gradient);
     padding: 15px;
     font-weight: 200;
-    border-radius: 10px;
+    border-radius: 19px;
+    width: 330px;
     color: white;
     cursor: pointer;
 }
