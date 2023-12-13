@@ -46,7 +46,7 @@ const StatisticsChart = ({value : dateValue, selectedOptionId : sensorId}) => {
   useEffect(() => {
     const chartData = async () => {
       try {
-        const res = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`);
+        const res = await axios.get(`http://13.127.57.185:5000/getPredData?id=${senId}&date=${date}`);
         const collectedData = res.data.data;
         const actualData = collectedData.actual_data.map((data) => data.act_kwh);
         const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
