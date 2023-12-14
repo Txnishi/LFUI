@@ -105,7 +105,7 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
         },
 
         legend: {
-            data: ['Predicted Power usage', 'Actual Power usage'],
+            data: ['Actual Power usage', 'Predicted Power usage'],
             textStyle: {
                 color: 'white', // Adjust the color as needed
                 fontSize: 16,
