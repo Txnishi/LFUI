@@ -1,18 +1,18 @@
 import React from "react";
 import css from './Admin.module.css';
 
-const AdminPage = () =>{
+const AdminPage = () => {
 
 
-    return(
-        <div className="container ">
-            <div className="customButton">
-                <span><button className="train">Training</button></span>
+    return (
+        <div className={`${css.container} `} >
+            <div className={`${css.customButton}`}>
+                <span><button className={`${css.train}`}>Training</button></span>
             </div>
-            <div className="customButton">
-            <span><button className="Pred">Prediction</button></span>
+            <div className={`${css.customButton}`}>
+                <span><button className={`${css.pred}`}>Prediction</button></span>
             </div>
-            
+
         </div>
     )
 }

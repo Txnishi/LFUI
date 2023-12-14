@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import css from './Statistics.module.css'
 import { BsArrowUpShort } from 'react-icons/bs'
 import { groupNumber } from '../../data'
@@ -17,39 +17,44 @@ import axios from "axios";
 
 const Statistics = () => {
 
-    const [ value, setValue ] = useState(dayjs.extend(customParseFormat));
+    const [value, setValue] = useState(dayjs.extend(customParseFormat));
     const month = () => {  //month variable so that its in the form of 01,02,....09,10..  and to make it 1 indexed
         const val = (value.$M + 1).toString();
-        return (value.$M < 9)? "0" + val : val;
+        return (value.$M < 9) ? "0" + val : val;
     }
-    const day = () => { 
-        return (value.$D < 10)? "0" + value.$D : value.$D;
+    const day = () => {
+        return (value.$D < 10) ? "0" + value.$D : value.$D;
     }
 
-        //api integration to get sensor data 
+    //api integration to get sensor data 
 
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
 
-    const sensorData = async() => {
+    const sensorData = async () => {
         const ans = await axios.get(
             'http://13.127.57.185:5000/get_sensorList'
         );
 
         const gotData = ans.data;
         console.log(gotData);
-    
-        console.log("sensorId",gotData.sensorList);
+
+        console.log("sensorId", gotData.sensorList);
+        console.log("sensor", gotData.sensorList[0]['uuid'])
+
 
         setOptions(gotData.sensorList);
+        setSelectedOption(gotData.sensorList[0]['uuid']);
     }
+
 
     const handleSelectChange = (event) => {
         console.log(event.target.value)
         setSelectedOption(event.target.value);
     };
 
-    useEffect(() =>{
+
+    useEffect(() => {
         sensorData();
     }, []);
 
@@ -68,30 +73,30 @@ const Statistics = () => {
                     </div> */}
                     <div className={css.card}>
                         <select id="dynamicSelect" value={selectedOption} onChange={handleSelectChange}>
-                            <option value="">Select Sensor</option>
+                            {/* <option value="">Select Sensor</option> */}
                             {options.map((option) => (
                                 <option value={option.uuid}>
-                                {option.sensorName}
-                            </option>
+                                    {option.sensorName}
+                                </option>
                             ))}
                         </select>
                     </div>
 
                     {/* <div className={css.card}> */}
 
-                            <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                <DatePicker
-                                    value={value}
-                                    onChange={(newValue) => setValue(newValue)}
-                                    className={`${css.datePicker}`}
-                                    format="DD-MM-YYYY" 
-                                />
-                            </LocalizationProvider>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                        <DatePicker
+                            value={value}
+                            onChange={(newValue) => setValue(newValue)}
+                            className={`${css.datePicker}`}
+                            format="DD-MM-YYYY"
+                        />
+                    </LocalizationProvider>
 
-                      
-                
+
+
                     {/* </div> */}
-{/* 
+                    {/* 
                     <div className={css.arrowIcon}>
                         <SlCalender />
                     </div>
@@ -112,7 +117,12 @@ const Statistics = () => {
             </div>
 
 
-            <StatisticsChart selectedOptionId={selectedOption} value={`${value.$y}-${month()}-${day()}`}/>
+
+            <div >
+                <StatisticsChart selectedOptionId={selectedOption} value={`${value.$y}-${month()}-${day()}`} />
+                <p className={`${css.chartTitle}`}>Actual V/S Prediction</p>
+            </div>
+
         </div>
     )
 }
