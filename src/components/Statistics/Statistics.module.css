@@ -28,7 +28,7 @@
 }
 
 .card > :nth-child(1) {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 .card > :nth-child(2) {
@@ -53,8 +53,9 @@
 }
 
 .card > select option {
-  background: var(--orange-gradient);
-  color: black;
+  background: #292929;
+  color: #cfcccc;
+  font-size: 23px;
 }
 
 .chartTitle {

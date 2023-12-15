@@ -9,10 +9,24 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import axios from "axios";
 
+dayjs.extend(customParseFormat);
 
+
+const theme = createTheme({
+    palette: {
+        mode: 'dark', // Set the theme mode to dark
+        primary: {
+            main: '#1a73e8',
+        },
+        background: {
+            default: '#121212', // Adjust the background color for dark theme
+        },
+    },
+});
 
 
 const Statistics = () => {
@@ -30,6 +44,7 @@ const Statistics = () => {
 
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
+    const [uomData, setUomData] = useState('');
 
     const sensorData = async () => {
         const ans = await axios.get(
@@ -37,6 +52,8 @@ const Statistics = () => {
         );
 
         const gotData = ans.data;
+        const uomData = gotData.sensorList[0]['UOM'];
+        setUomData(uomData);
         console.log(gotData);
 
         console.log("sensorId", gotData.sensorList);
@@ -84,14 +101,17 @@ const Statistics = () => {
 
                     {/* <div className={css.card}> */}
 
-                    <LocalizationProvider dateAdapter={AdapterDayjs} >
-                        <DatePicker
-                            value={value}
-                            onChange={(newValue) => setValue(newValue)}
-                            className={`${css.datePicker}`}
-                            format="DD-MM-YYYY"
-                        />
-                    </LocalizationProvider>
+                    <ThemeProvider theme={theme}>
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                            <DatePicker
+                                value={value}
+                                onChange={(newValue) => setValue(newValue)}
+                                className={`${css.datePicker}`}
+                                format="DD-MM-YYYY"
+                            />
+                        </LocalizationProvider>
+                    </ThemeProvider>
 
 
 
@@ -119,8 +139,8 @@ const Statistics = () => {
 
 
             <div >
-                <StatisticsChart selectedOptionId={selectedOption} value={`${value.$y}-${month()}-${day()}`} />
-                <p className={`${css.chartTitle}`}>Actual V/S Prediction</p>
+                <StatisticsChart uom={uomData} selectedOptionId={selectedOption} value={`${value.$y}-${month()}-${day()}`} />
+                <p className={`${css.chartTitle}`}>Actual V/S Prediction {uomData}</p>
             </div>
 
         </div>

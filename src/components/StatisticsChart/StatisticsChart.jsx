@@ -64,10 +64,17 @@ import axios from "axios";
 //     // Update the chart key whenever selectedOptionId or dateValue changes
 //     setChartKey(`${senId}-${date}`);
 // }, [date, senId]);/
-const StatisticsChart = ({ selectedOptionId, value }) => {
+
+
+
+
+const StatisticsChart = ({ uom, selectedOptionId, value }) => {
     const [actualData, setActualData] = useState([]);
     const [predictedData, setPredictedData] = useState([]);
     const [chartKey, setChartKey] = useState('');
+
+
+
 
     useEffect(() => {
         console.log('Effect is running!');
@@ -80,6 +87,7 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
                 const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
                 setActualData(actualData);
                 setPredictedData(predictedData);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -107,7 +115,7 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
         legend: {
             data: ['Actual Power usage', 'Predicted Power usage'],
             textStyle: {
-                color: 'white', // Adjust the color as needed
+                color: 'lavender', // Adjust the color as needed
                 fontSize: 16,
                 fontWeight: 540,
             },
@@ -139,10 +147,12 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
                 name: "Hours",
                 nameTextStyle: {
                     fontSize: 15, // Adjust the font size as needed
-                    color: '#979A9A',
+                    color: 'lavender',
+
                 },
                 axisLabel: {
-                    color: '#979A9A', // Set the color of the data values
+                    // color: '#979A9A', // Set the color of the data values
+                    color: 'lavender',
                     fontSize: 12, // Adjust the font size as needed
                 },
                 boundaryGap: false,
@@ -156,13 +166,13 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
                 splitLine: {
                     show: false,
                 },
-                name: 'Units Consumed (UOM)',
+                name: 'Units in ' + uom,
                 nameTextStyle: {
                     fontSize: 15, // Adjust the font size as needed
-                    color: '#979A9A',
+                    color: 'lavender',
                 },
                 axisLabel: {
-                    color: '#979A9A', // Set the color of the data values
+                    color: 'lavender', // Set the color of the data values
                     fontSize: 12, // Adjust the font size as needed
                 },
 
@@ -249,14 +259,12 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
                 type: "line",
                 smooth: true,
                 color: "blue",
-                textStyle: {
-                    colour: 'white'
-                },
+
                 label: {
                     show: true,
                     position: 'top',
                     color: '#97f0af',
-                    fontSize: '20px'
+                    fontSize: '16px'
                 },
                 lineStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 0.7, [
@@ -297,9 +305,10 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
                 smooth: true,
                 label: {
                     show: true,
-                    position: 'down',
+                    position: 'bottom',
                     color: 'white',
-                    fontSize: '20px'
+                    // backgroundColor: 'black',
+                    fontSize: '16px'
                 },
                 lineStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -330,7 +339,7 @@ const StatisticsChart = ({ selectedOptionId, value }) => {
                 emphasis: {
                     focus: "series",
                 },
-                showSymbol: false,
+                showSymbol: true,
                 // data: [28000, 19000, 32000, 18000, 41000, 30000, 26000,28000, 19000, 32000, 18000, 41000, 30000, 26000,28000, 19000, 32000, 18000, 41000, 30000, 26000, 19000, 34000, 29000]
                 data: predictedData
             },
