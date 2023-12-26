@@ -4,7 +4,7 @@ export const cardsData = [
   {
     title: "Total Actual kWh",
     change: 24,
-    amount: 10125.0,
+    amount: 2345,
   },
   {
     title: "Max Demand(Actual)",

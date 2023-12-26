@@ -15,11 +15,13 @@
   justify-content: flex-end;
   font-weight: wrap;
 }
-.cards > :nth-child(1) {
+
+.cards> :nth-child(1) {
   align-items: center;
   display: flex;
   gap: 2rem;
 }
+
 .card {
   display: flex;
   flex-direction: column;
@@ -27,11 +29,11 @@
   gap: 0.5rem;
 }
 
-.card > :nth-child(1) {
+.card> :nth-child(1) {
   font-size: 1.2rem;
 }
 
-.card > :nth-child(2) {
+.card> :nth-child(2) {
   font-size: 1.1rem;
   font-weight: 500;
 }
@@ -41,7 +43,7 @@
   border-radius: 19px;
 }
 
-.card > select {
+.card>select {
   border: none;
   background: var(--orange-gradient);
   padding: 15px;
@@ -52,7 +54,7 @@
   cursor: pointer;
 }
 
-.card > select option {
+.card>select option {
   background: #292929;
   color: #cfcccc;
   font-size: 23px;

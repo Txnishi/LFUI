@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react'
 import * as echarts from 'echarts'
-import axios from "axios";
+
+
 
 // const StatisticsChart = ({ value: dateValue, selectedOptionId: sensorId }) => {
 //     const [actualData, setActualData] = useState([]);
@@ -17,12 +18,12 @@ import axios from "axios";
 
 // const chartData = async() => {
 
-//     const res = await axios.get(
+//     const collectedData = await axios.get(
 //         // `http://13.127.57.185:5000/getPredData?id=5f718c439c7a78.65267835&date=${date}`
 //         `http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`
 //     );
 
-//     const collectedData = res.data.data;
+//     const collectedData = collectedData.data.data;
 //         console.log(collectedData)
 
 //     const actualData = collectedData.actual_data.map((data)=> {
@@ -49,8 +50,8 @@ import axios from "axios";
 // useEffect(() => {
 //     const chartData = async () => {
 //         try {
-//             const res = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`);
-//             const collectedData = res.data.data;
+//             const collectedData = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${senId}&date=${date}`);
+//             const collectedData = collectedData.data.data;
 //             const actualData = collectedData.actual_data.map((data) => data.act_kwh);
 //             const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
 //             setActualData(actualData);
@@ -68,35 +69,86 @@ import axios from "axios";
 
 
 
-const StatisticsChart = ({ uom, selectedOptionId, value }) => {
-    const [actualData, setActualData] = useState([]);
-    const [predictedData, setPredictedData] = useState([]);
-    const [chartKey, setChartKey] = useState('');
 
 
 
+const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }) => {
+
+    // const [actualData, setActualData] = useState([]);
+    // const [predictedData, setPredictedData] = useState([]);
+
+
+    // const [chartTime, setChartTime] = useState([]);
+
+    console.log("lalala", chartKey);
+    console.log(actualData);
+
+    const [actualSum, setActualSum] = useState('');
+    const [actualDemand, setActualDemand] = useState('');
+    const [actualTime, setActualTime] = useState('');
+
+    const [predSum, setPredSum] = useState('');
+    const [predDemand, setPredDemand] = useState('');
+    const [predTime, setPredTime] = useState('');
+    console.log(actualData, predictedData, chartTime);
 
     useEffect(() => {
-        console.log('Effect is running!');
-        console.log(selectedOptionId);
-        const chartData = async () => {
-            try {
-                const res = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${selectedOptionId}&date=${value}`);
-                const collectedData = res.data.data;
-                const actualData = collectedData.actual_data.map((data) => data.act_kwh);
-                const predictedData = collectedData.predicted_data.map((data) => data.pre_kwh);
-                setActualData(actualData);
-                setPredictedData(predictedData);
 
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+        const wait = async () => {
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
 
-        chartData();
-        // Update the chart key whenever selectedOptionId or value changes
-        setChartKey(`${selectedOptionId}-${value}`);
-    }, [selectedOptionId, value]);
+        wait();
+    }, []);
+
+    // useEffect(() => {
+    //     console.log('Effect is running!');
+    //     console.log(selectedOptionId);
+    //     const fetchData = async () => {
+    //         try {
+    //             const collectedData = await getChartData(selectedOptionId, value);
+    //             console.log(collectedData);
+
+    //             // const res = await axios.get(`http://13.127.57.185:5000/getPredDataHourly?id=${selectedOptionId}&date=${value}`);
+
+    //             const actualData = collectedData.data.actual_data.map((data) => data.act_kwh);
+    //             const predictedData = collectedData.data.predicted_data.map((data) => data.pre_kwh);
+    //             const chartTime = collectedData.data.actual_data.map((data) => data.hour);
+    //             setActualData(actualData);
+    //             setPredictedData(predictedData);
+    //             setChartTime(chartTime);
+    //             console.log("yo");
+
+
+    //             setActualSum(collectedData.actual_kwh_sum);
+    //             console.log(actualSum);
+
+    //             setActualDemand(collectedData.actual_max_value);
+    //             console.log(actualDemand);
+
+    //             setActualTime(collectedData.actual_max_hour);
+    //             console.log(actualTime);
+
+
+    //             setPredSum(collectedData.pred_daily_sum);
+    //             console.log(predSum);
+
+    //             setPredDemand(collectedData.pred_max_value);
+    //             console.log(predDemand);
+
+    //             setPredTime(collectedData.pred_max_hour);
+    //             console.log(predTime);
+
+
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+
+    //     fetchData();
+    //     // Update the chart key whenever selectedOptionId or value changes
+    //     setChartKey(`${selectedOptionId}-${value}`);
+    // }, [selectedOptionId, value]);
 
 
 
@@ -104,7 +156,7 @@ const StatisticsChart = ({ uom, selectedOptionId, value }) => {
     const option = {
 
         color: ['var(--orange)', 'blue'],
-        animationDuration: 3500,
+        animationDuration: 6500,
 
         toolbox: {
             feature: {
@@ -156,7 +208,7 @@ const StatisticsChart = ({ uom, selectedOptionId, value }) => {
                     fontSize: 12, // Adjust the font size as needed
                 },
                 boundaryGap: false,
-                data: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+                data: chartTime,
             }
 
         ],
@@ -352,3 +404,6 @@ const StatisticsChart = ({ uom, selectedOptionId, value }) => {
 }
 
 export default StatisticsChart
+
+
+

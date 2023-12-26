@@ -1,8 +1,15 @@
 import Orders from '../../components/Orders/Orders';
+import { useState } from 'react';
 import Statistics from '../../components/Statistics/Statistics';
 import { cardsData, groupNumber } from '../../data';
 import css from './Dashboard.module.css';
 const Dashboard = () => {
+
+  const [receivedData, setReceivedData] = useState(null);
+  const handleData = (data) => {
+    setReceivedData(data);
+  };
+
   return <div className={css.container}>
 
     {/* left side */}
@@ -21,30 +28,35 @@ const Dashboard = () => {
             </select>
           </div> */}
         </div>
-          <div className={css.cards}>
-            {
-              cardsData.map((card, index)=> (
+        <div className={css.cards}>
+          {receivedData && receivedData.length &&
+            (
+              receivedData.map((card, index) => (
                 <div className={css.card} key={card.id}>
                   <div className={css.cardHead}>
                     <span>{card.title}</span>
-                    <span>+{card.change}</span>
+                    {card.amount ? (
+                      <span>+{card.change}</span>
+                    ) : (
+                      <span> </span>
+                    )
+                    }
                   </div>
 
                   <div className={css.cardAmount}>
-                    {card.type === "price" ? <span>₹</span> : <span></span>}
-                    <span>{groupNumber(card.amount)}</span>
-                    {card.type !== "price" ? <span> units </span> : <span></span>}
+                    <span>{card.amount}</span>
                   </div>
-                  
+
                 </div>
               ))
-            }
-          </div>
+            )
+          }
+        </div>
       </div>
 
 
 
-      <Statistics/>
+      <Statistics handleData={handleData} />
 
     </div>
   </div>
