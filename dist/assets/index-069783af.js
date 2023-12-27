@@ -109887,15 +109887,15 @@ const Statistics = ({ handleData }) => {
     ] })
   ] });
 };
-const container = "_container_1l52w_1";
-const dashboard = "_dashboard_1l52w_17";
-const dashboardHead = "_dashboardHead_1l52w_31";
-const head = "_head_1l52w_43";
-const durationButton = "_durationButton_1l52w_61";
-const cards = "_cards_1l52w_79";
-const card = "_card_1l52w_79";
-const cardHead = "_cardHead_1l52w_101";
-const cardAmount = "_cardAmount_1l52w_131";
+const container = "_container_1okbq_1";
+const dashboard = "_dashboard_1okbq_17";
+const dashboardHead = "_dashboardHead_1okbq_31";
+const head = "_head_1okbq_43";
+const durationButton = "_durationButton_1okbq_65";
+const cards = "_cards_1okbq_83";
+const card = "_card_1okbq_83";
+const cardHead = "_cardHead_1okbq_105";
+const cardAmount = "_cardAmount_1okbq_137";
 const css = {
   container,
   dashboard,

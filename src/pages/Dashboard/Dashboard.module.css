@@ -19,16 +19,18 @@
   gap: 2rem;
 }
 
-.dashboardHead > .head {
+.dashboardHead>.head {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.head > :nth-child(1) {
+
+.head> :nth-child(1) {
   font-size: 1.5rem;
   font-weight: 500;
 }
-.durationButton > select {
+
+.durationButton>select {
   border: none;
   background: var(--orange-gradient);
   padding: 10px;
@@ -42,28 +44,34 @@
   justify-content: space-between;
 }
 
-.card{
+.card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.cardHead{
+.cardHead {
   font-size: 1rem;
 }
 
-.cardHead>:nth-child(1)
-{
+.cardHead>:nth-child(1) {
   color: rgba(255, 255, 255, 0.835);
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.cardHead>:nth-child(2){
+.cardHead>:nth-child(2) {
   margin-left: 1.5rem;
   font-size: 0.8rem;
   color: var(--green);
 }
 
-.cardAmount:nth-child(1),
+.cardAmount {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* .cardAmount:nth-child(1),
 .cardAmount:nth-child(3) {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.776);
@@ -71,9 +79,8 @@
   bottom: 5px;
 }
 
-.cardAmount>:nth-child(2)
-{
+.cardAmount>:nth-child(2) {
   font-size: 1.5rem;
   font-weight: bold;
   margin-left: 8px;
-}
+} */
