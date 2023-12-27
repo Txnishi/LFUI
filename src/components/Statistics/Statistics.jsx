@@ -85,10 +85,6 @@ const Statistics = ({ handleData }) => {
         setUomData(uomData);
         console.log(gotData);
 
-        console.log("sensorId", gotData.sensorList);
-        console.log("sensor", gotData.sensorList[0]['uuid'])
-
-
         setOptions(gotData.sensorList);
         setSelectedOption(gotData.sensorList[0]['uuid']);
     }
@@ -102,7 +98,9 @@ const Statistics = ({ handleData }) => {
 
 
     useEffect(() => {
-        sensorData();
+        if (!selectedOption) {
+            sensorData();
+        }
 
         const fetchData = async () => {
             try {
