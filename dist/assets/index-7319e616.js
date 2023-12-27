@@ -109743,7 +109743,7 @@ axios.default = axios;
 const axios$1 = axios;
 const getChartData = async (selectedOptionId, value) => {
   try {
-    const res = await axios$1.get(`http://13.127.57.185:5000/getPredDataHourly?id=${selectedOptionId}&date=${value}`);
+    const res = await axios$1.get(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOptionId}&date=${value}`);
     console.log(res.data);
     return res.data;
   } catch (error) {
@@ -109755,13 +109755,11 @@ dayjs.extend(customParseFormat);
 const theme = createTheme({
   palette: {
     mode: "dark",
-    // Set the theme mode to dark
     primary: {
       main: "#1a73e8"
     },
     background: {
       default: "#121212"
-      // Adjust the background color for dark theme
     }
   }
 });
@@ -109774,14 +109772,13 @@ const Statistics = ({ handleData }) => {
   const [predictedData, setPredictedData] = reactExports.useState([]);
   const [chartKey, setChartKey] = reactExports.useState("");
   const [chartTime, setChartTime] = reactExports.useState([]);
-  const [actualSum, setActualSum] = reactExports.useState("");
-  const [actualDemand, setActualDemand] = reactExports.useState("");
+  const [actualDailySum, setActualDailySum] = reactExports.useState("");
+  const [actualDailyDemand, setActualDailyDemand] = reactExports.useState("");
   const [actualMaxHour, setActualMaxHour] = reactExports.useState("");
-  const [predSum, setPredSum] = reactExports.useState("");
-  const [predDemand, setPredDemand] = reactExports.useState("");
+  const [predDailySum, setPredDailySum] = reactExports.useState("");
+  const [predDailyDemand, setPredDailyDemand] = reactExports.useState("");
   const [predMaxHour, setPredMaxHour] = reactExports.useState("");
   const [value, setValue] = reactExports.useState(dayjs.extend(customParseFormat));
-  console.log("check");
   const month = () => {
     const val = (value.$M + 1).toString();
     return value.$M < 9 ? "0" + val : val;
@@ -109814,27 +109811,26 @@ const Statistics = ({ handleData }) => {
     const fetchData = async () => {
       try {
         const collectedData = await getChartData(selectedOption, dateValue);
-        console.log("yo1", collectedData);
-        setPredDemand(collectedData.pred_max_value);
+        setPredDailyDemand(collectedData.pred_max_value);
         setPredMaxHour(collectedData.pred_max_hour);
-        setPredSum(collectedData.pred_daily_sum);
-        setActualDemand(collectedData.actual_max_value);
+        setPredDailySum(collectedData.pred_daily_sum);
+        setActualDailyDemand(collectedData.actual_max_value);
         setActualMaxHour(collectedData.actual_max_hour);
-        setActualSum(collectedData.actual_kwh_sum);
+        setActualDailySum(collectedData.actual_daily_sum);
         if (collectedData.data) {
           const ActData = collectedData.data.actual_data.map((data2) => data2.act_kwh);
           const PredData = collectedData.data.predicted_data.map((data2) => data2.pre_kwh);
-          const ChaTime = collectedData.data.actual_data.map((data2) => data2.hour);
+          const ChaTime = collectedData.data.actual_data.map((data2) => data2.clock);
           setActualData(ActData);
           setPredictedData(PredData);
           setChartTime(ChaTime);
         }
-        console.log("receiving", actualSum);
+        console.log("receiving", actualDailySum);
         const fetchedData = [
           {
             title: "Total Actual kWh",
             change: 24,
-            amount: collectedData.actual_kwh_sum
+            amount: collectedData.actual_daily_sum
           },
           {
             title: "Max Demand(Actual)",

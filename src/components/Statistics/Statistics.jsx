@@ -19,12 +19,12 @@ dayjs.extend(customParseFormat);
 
 const theme = createTheme({
     palette: {
-        mode: 'dark', // Set the theme mode to dark
+        mode: 'dark',
         primary: {
             main: '#1a73e8',
         },
         background: {
-            default: '#121212', // Adjust the background color for dark theme
+            default: '#121212',
         },
     },
 });
@@ -45,19 +45,18 @@ const Statistics = ({ handleData }) => {
 
     const [chartTime, setChartTime] = useState([]);
 
-    const [actualSum, setActualSum] = useState('');
-    const [actualDemand, setActualDemand] = useState('');
+    const [actualDailySum, setActualDailySum] = useState('');
+    const [actualDailyDemand, setActualDailyDemand] = useState('');
     const [actualMaxHour, setActualMaxHour] = useState('');
 
-    const [predSum, setPredSum] = useState('');
-    const [predDemand, setPredDemand] = useState('');
+    const [predDailySum, setPredDailySum] = useState('');
+    const [predDailyDemand, setPredDailyDemand] = useState('');
     const [predMaxHour, setPredMaxHour] = useState('');
 
 
 
     const [value, setValue] = useState(dayjs.extend(customParseFormat));
 
-    console.log("check");
     const month = () => {  //month variable so that its in the form of 01,02,....09,10..  and to make it 1 indexed
         const val = (value.$M + 1).toString();
         return (value.$M < 9) ? "0" + val : val;
@@ -71,9 +70,8 @@ const Statistics = ({ handleData }) => {
     const minDate = dayjs('2023-11-01');
     const maxDate = dayjs().endOf('month');
 
+
     //api integration to get sensor data 
-
-
 
     const sensorData = async () => {
         const ans = await axios.get(
@@ -106,33 +104,31 @@ const Statistics = ({ handleData }) => {
             try {
                 const collectedData = await getChartData(selectedOption, dateValue);
 
-                console.log("yo1", collectedData);
-
-                setPredDemand(collectedData.pred_max_value);
+                setPredDailyDemand(collectedData.pred_max_value);
                 setPredMaxHour(collectedData.pred_max_hour);
-                setPredSum(collectedData.pred_daily_sum);
+                setPredDailySum(collectedData.pred_daily_sum);
 
-                setActualDemand(collectedData.actual_max_value);
+                setActualDailyDemand(collectedData.actual_max_value);
                 setActualMaxHour(collectedData.actual_max_hour);
-                setActualSum(collectedData.actual_kwh_sum);
+                setActualDailySum(collectedData.actual_daily_sum);
 
                 if (collectedData.data) {
 
                     const ActData = collectedData.data.actual_data.map((data) => data.act_kwh);
                     const PredData = collectedData.data.predicted_data.map((data) => data.pre_kwh);
-                    const ChaTime = collectedData.data.actual_data.map((data) => data.hour);
+                    const ChaTime = collectedData.data.actual_data.map((data) => data.clock);
                     setActualData(ActData);
                     setPredictedData(PredData);
                     setChartTime(ChaTime);
 
                 }
 
-                console.log("receiving", actualSum);
+                console.log("receiving", actualDailySum);
                 const fetchedData = [
                     {
                         title: "Total Actual kWh",
                         change: 24,
-                        amount: collectedData.actual_kwh_sum,
+                        amount: collectedData.actual_daily_sum,
                     },
                     {
                         title: "Max Demand(Actual)",
@@ -160,43 +156,12 @@ const Statistics = ({ handleData }) => {
             }
         };
 
-        // const fetchDataWithDelay = () => {
-        //     setTimeout(() => {
-        //         fetchData();
-        //     }, 5); // 1000 milliseconds = 1 second
-        // };
 
         if (selectedOption) {
             setChartKey(`${selectedOption}-${dateValue}`);
             fetchData();
-            // console.log("fetching", fetchedData);
-            // setData(
-            //     [
-            //         {
-            //             title: "Total Actual kWh",
-            //             change: 24,
-            //             amount: actualSum,
-            //         },
-            //         {
-            //             title: "Max Demand(Actual)",
-            //             change: -14,
-            //             amount: actualDemand,
-            //         },
-            //         {
-            //             title: "Total Predicted kWh",
-            //             change: 18,
-            //             amount: predSum,
-            //         },
-            //         {
-            //             title: "Max Demand(Predicted)",
-            //             change: 18,
-            //             amount: predDemand,
-            //         },
-            //     ]
-            // );
-            // handleData(fetchedData);
         }
-        // Update the chart key whenever selectedOptionId or value changes
+
     }, [selectedOption, dateValue]);
 
     // useEffect(() => {
@@ -214,12 +179,7 @@ const Statistics = ({ handleData }) => {
             <div className={`${css.cards} grey-container`}>
                 <div>
 
-                    {/* <div className={css.card}>
-                        <select>
-                            <option value="1">sensor 1</option>
-                            <option value="2">sensor 2</option>
-                        </select>
-                    </div> */}
+
                     <div className={css.card}>
                         <select id="dynamicSelect" value={selectedOption} onChange={handleSelectChange}>
                             {/* <option value="">Select Sensor</option> */}
