@@ -45,6 +45,8 @@ const Dashboard = () => {
 
                   <div className={css.cardAmount}>
                     <span>{card.amount}</span>
+                    <span >{card.hour}</span>
+
                   </div>
 
                 </div>

@@ -138,6 +138,7 @@ const Statistics = ({ handleData }) => {
                         title: "Max Demand(Actual)",
                         change: -14,
                         amount: collectedData.actual_max_value,
+                        hour: collectedData.actual_max_hour + 'hh',
                     },
                     {
                         title: "Total Predicted kWh",
@@ -148,6 +149,7 @@ const Statistics = ({ handleData }) => {
                         title: "Max Demand(Predicted)",
                         change: 18,
                         amount: collectedData.pred_max_value,
+                        hour: collectedData.pred_max_hour + 'hh',
                     },
                 ]
 

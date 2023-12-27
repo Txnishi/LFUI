@@ -109839,7 +109839,8 @@ const Statistics = ({ handleData }) => {
           {
             title: "Max Demand(Actual)",
             change: -14,
-            amount: collectedData.actual_max_value
+            amount: collectedData.actual_max_value,
+            hour: collectedData.actual_max_hour + "hh"
           },
           {
             title: "Total Predicted kWh",
@@ -109849,7 +109850,8 @@ const Statistics = ({ handleData }) => {
           {
             title: "Max Demand(Predicted)",
             change: 18,
-            amount: collectedData.pred_max_value
+            amount: collectedData.pred_max_value,
+            hour: collectedData.pred_max_hour + "hh"
           }
         ];
         handleData(fetchedData);
@@ -109887,15 +109889,15 @@ const Statistics = ({ handleData }) => {
     ] })
   ] });
 };
-const container = "_container_1okbq_1";
-const dashboard = "_dashboard_1okbq_17";
-const dashboardHead = "_dashboardHead_1okbq_31";
-const head = "_head_1okbq_43";
-const durationButton = "_durationButton_1okbq_65";
-const cards = "_cards_1okbq_83";
-const card = "_card_1okbq_83";
-const cardHead = "_cardHead_1okbq_105";
-const cardAmount = "_cardAmount_1okbq_137";
+const container = "_container_f0tud_1";
+const dashboard = "_dashboard_f0tud_17";
+const dashboardHead = "_dashboardHead_f0tud_31";
+const head = "_head_f0tud_43";
+const durationButton = "_durationButton_f0tud_65";
+const cards = "_cards_f0tud_83";
+const card = "_card_f0tud_83";
+const cardHead = "_cardHead_f0tud_105";
+const cardAmount = "_cardAmount_f0tud_137";
 const css = {
   container,
   dashboard,
@@ -109923,7 +109925,10 @@ const Dashboard = () => {
             card2.change
           ] }) : /* @__PURE__ */ jsx("span", { children: " " })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: css.cardAmount, children: /* @__PURE__ */ jsx("span", { children: card2.amount }) })
+        /* @__PURE__ */ jsxs("div", { className: css.cardAmount, children: [
+          /* @__PURE__ */ jsx("span", { children: card2.amount }),
+          /* @__PURE__ */ jsx("span", { children: card2.hour })
+        ] })
       ] }, card2.id)) })
     ] }),
     /* @__PURE__ */ jsx(Statistics, { handleData })
