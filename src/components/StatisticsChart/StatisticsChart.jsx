@@ -72,7 +72,7 @@ import * as echarts from 'echarts'
 
 
 
-const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }) => {
+const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chartKey }) => {
 
     // const [actualData, setActualData] = useState([]);
     // const [predictedData, setPredictedData] = useState([]);
@@ -151,7 +151,7 @@ const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }
     // }, [selectedOptionId, value]);
 
 
-
+    let xName = (lab == "Daily Summary Dashboard") ? "Hours" : ("Date");
 
     const option = {
 
@@ -192,11 +192,12 @@ const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }
             show: true,
         },
 
+
         xAxis: [
             {
 
                 type: "category",
-                name: "Hours",
+                name: xName,
                 nameTextStyle: {
                     fontSize: 15, // Adjust the font size as needed
                     color: 'lavender',
@@ -360,7 +361,7 @@ const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }
                     position: 'bottom',
                     color: 'white',
                     // backgroundColor: 'black',
-                    fontSize: '16px'
+                    fontSize: '14px'
                 },
                 lineStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [

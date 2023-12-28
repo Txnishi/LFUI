@@ -3,12 +3,24 @@ import { useState } from 'react';
 import Statistics from '../../components/Statistics/Statistics';
 import { cardsData, groupNumber } from '../../data';
 import css from './Dashboard.module.css';
+
+
 const Dashboard = () => {
 
   const [receivedData, setReceivedData] = useState(null);
   const handleData = (data) => {
     setReceivedData(data);
   };
+
+  const [buttonLabel, setButtonLabel] = useState('Daily Summary Dashboard');
+
+  const handleButtonClick = () => {
+    // Toggle between two labels
+    setButtonLabel((prevLabel) => (prevLabel === 'Daily Summary Dashboard' ? 'Monthly Summary Dashboard' : 'Daily Summary Dashboard'));
+  };
+
+
+
 
   return <div className={css.container}>
 
@@ -18,15 +30,7 @@ const Dashboard = () => {
       {/* <div style={{padding}}></div> */}
       <div className={`${css.dashboardHead} theme-container`}>
         <div className={css.head}>
-          <span>Summary Dashboard</span>
-
-          {/* <div className={css.durationButton}>
-            <select>
-              <option value="">Hourly</option>
-              <option value="">Daily</option>
-              <option value="">Monthly</option>
-            </select>
-          </div> */}
+          <span><button title='click to change' className={css.dailyBtn} onClick={handleButtonClick}>{buttonLabel}</button></span>
         </div>
         <div className={css.cards}>
           {receivedData && receivedData.length &&
@@ -35,17 +39,22 @@ const Dashboard = () => {
                 <div className={css.card} key={card.id}>
                   <div className={css.cardHead}>
                     <span>{card.title}</span>
-                    {card.amount ? (
+                    {/* {card.amount ? (
                       <span>+{card.change}</span>
                     ) : (
                       <span> </span>
                     )
-                    }
+                    } */}
                   </div>
 
                   <div className={css.cardAmount}>
                     <span>{card.amount}</span>
-                    <span >{card.hour}</span>
+                    {card.amount ? (
+                      <span>{card.hour}</span>
+                    ) : (
+                      <span> </span>
+                    )
+                    }
 
                   </div>
 
@@ -58,7 +67,7 @@ const Dashboard = () => {
 
 
 
-      <Statistics handleData={handleData} />
+      <Statistics label={buttonLabel} handleData={handleData} />
 
     </div>
   </div>

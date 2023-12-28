@@ -85893,7 +85893,7 @@ const css$2 = {
   datePicker,
   chartTitle
 };
-const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }) => {
+const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chartKey }) => {
   console.log("lalala", chartKey);
   console.log(actualData);
   reactExports.useState("");
@@ -85909,6 +85909,7 @@ const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }
     };
     wait();
   }, []);
+  let xName = lab == "Daily Summary Dashboard" ? "Hours" : "Date";
   const option = {
     color: ["var(--orange)", "blue"],
     animationDuration: 6500,
@@ -85946,7 +85947,7 @@ const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }
     xAxis: [
       {
         type: "category",
-        name: "Hours",
+        name: xName,
         nameTextStyle: {
           fontSize: 15,
           // Adjust the font size as needed
@@ -86108,7 +86109,7 @@ const StatisticsChart = ({ uom, actualData, predictedData, chartTime, chartKey }
           position: "bottom",
           color: "white",
           // backgroundColor: 'black',
-          fontSize: "16px"
+          fontSize: "14px"
         },
         lineStyle: {
           color: new LinearGradient$1(0, 0, 0, 1, [
@@ -109741,9 +109742,19 @@ axios.getAdapter = adapters.getAdapter;
 axios.HttpStatusCode = HttpStatusCode$1;
 axios.default = axios;
 const axios$1 = axios;
-const getChartData = async (selectedOptionId, value) => {
+const getDailyChartData = async (selectedOptionId, value) => {
   try {
     const res = await axios$1.get(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOptionId}&date=${value}`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+};
+const getMonthlyChartData = async (selectedOptionId, value) => {
+  try {
+    const res = await axios$1.get(`http://13.127.57.185:5000/getPredDataMonthly?id=${selectedOptionId}&date=${value}`);
     console.log(res.data);
     return res.data;
   } catch (error) {
@@ -109763,7 +109774,7 @@ const theme = createTheme({
     }
   }
 });
-const Statistics = ({ handleData }) => {
+const Statistics = ({ handleData, label }) => {
   reactExports.useState({});
   const [options, setOptions] = reactExports.useState([]);
   const [selectedOption, setSelectedOption] = reactExports.useState("");
@@ -109778,6 +109789,12 @@ const Statistics = ({ handleData }) => {
   const [predDailySum, setPredDailySum] = reactExports.useState("");
   const [predDailyDemand, setPredDailyDemand] = reactExports.useState("");
   const [predMaxHour, setPredMaxHour] = reactExports.useState("");
+  const [actMonthlySum, setActMonthlySum] = reactExports.useState("");
+  const [actMaxDate, setActMaxDate] = reactExports.useState("");
+  const [actMonthlyMaxDemand, setActMonthlyMaxDemand] = reactExports.useState("");
+  const [predMonthlySum, setPredMonthlySum] = reactExports.useState("");
+  const [predMaxDate, setPredMaxDate] = reactExports.useState("");
+  const [predMonthlyMaxDemand, setPredMonthlyMaxDemand] = reactExports.useState("");
   const [value, setValue] = reactExports.useState(dayjs.extend(customParseFormat));
   const month = () => {
     const val = (value.$M + 1).toString();
@@ -109787,8 +109804,10 @@ const Statistics = ({ handleData }) => {
     return value.$D < 10 ? "0" + value.$D : value.$D;
   };
   const dateValue = `${value.$y}-${month()}-${day()}`;
+  const monthValue = `${value.$y}-${month()}`;
   const minDate = dayjs("2023-11-01");
   const maxDate = dayjs().endOf("month");
+  const minMonthDate = dayjs("2023-11");
   const sensorData = async () => {
     const ans = await axios$1.get(
       "http://13.127.57.185:5000/get_sensorList"
@@ -109808,15 +109827,31 @@ const Statistics = ({ handleData }) => {
     if (!selectedOption) {
       sensorData();
     }
+    console.log(monthValue);
+    console.log(dateValue);
     const fetchData = async () => {
       try {
-        const collectedData = await getChartData(selectedOption, dateValue);
-        setPredDailyDemand(collectedData.pred_max_value);
-        setPredMaxHour(collectedData.pred_max_hour);
-        setPredDailySum(collectedData.pred_daily_sum);
-        setActualDailyDemand(collectedData.actual_max_value);
-        setActualMaxHour(collectedData.actual_max_hour);
-        setActualDailySum(collectedData.actual_daily_sum);
+        let collectedData = "NULL";
+        if (label == "Daily Summary Dashboard") {
+          collectedData = await getDailyChartData(selectedOption, dateValue);
+          setPredDailyDemand(collectedData.pred_max_value);
+          setPredMaxHour(collectedData.pred_max_hour);
+          setPredDailySum(collectedData.pred_daily_sum);
+          setActualDailyDemand(collectedData.actual_max_value);
+          setActualMaxHour(collectedData.actual_max_hour);
+          setActualDailySum(collectedData.actual_daily_sum);
+        } else {
+          collectedData = await getMonthlyChartData(selectedOption, monthValue);
+          setPredMonthlyMaxDemand(collectedData.pred_max_date_value);
+          setPredMaxDate(collectedData.pred_max_date);
+          setPredMonthlySum(collectedData.pred_monthly_sum);
+          setActMaxDate(collectedData.act_max_date);
+          setActMonthlyMaxDemand(collectedData.act_max_date_value);
+          setActMonthlySum(collectedData.act_monthly_sum);
+        }
+        if (collectedData === "NULL") {
+          return;
+        }
         if (collectedData.data) {
           const ActData = collectedData.data.actual_data.map((data2) => data2.act_kwh);
           const PredData = collectedData.data.predicted_data.map((data2) => data2.pre_kwh);
@@ -109830,24 +109865,24 @@ const Statistics = ({ handleData }) => {
           {
             title: "Total Actual kWh",
             change: 24,
-            amount: collectedData.actual_daily_sum
-          },
-          {
-            title: "Max Demand(Actual)",
-            change: -14,
-            amount: collectedData.actual_max_value,
-            hour: collectedData.actual_max_hour + "hh"
+            amount: collectedData.actual_daily_sum || collectedData.act_monthly_sum
           },
           {
             title: "Total Predicted kWh",
             change: 18,
-            amount: collectedData.pred_daily_sum
+            amount: collectedData.pred_daily_sum || collectedData.pred_monthly_sum
+          },
+          {
+            title: "Max Demand(Actual)",
+            change: -14,
+            amount: collectedData.actual_max_value || collectedData.act_max_date_value,
+            hour: collectedData.act_max_date || collectedData.actual_max_hour + "hh"
           },
           {
             title: "Max Demand(Predicted)",
             change: 18,
-            amount: collectedData.pred_max_value,
-            hour: collectedData.pred_max_hour + "hh"
+            amount: collectedData.pred_max_value || collectedData.pred_max_date_value,
+            hour: collectedData.pred_max_date || collectedData.pred_max_hour + "hh"
           }
         ];
         handleData(fetchedData);
@@ -109855,18 +109890,19 @@ const Statistics = ({ handleData }) => {
         console.error("Error fetching data:", error);
       }
     };
-    if (selectedOption) {
-      setChartKey(`${selectedOption}-${dateValue}`);
+    if (selectedOption || label) {
+      setChartKey(`${selectedOption}-${dateValue}-${label}-${monthValue}`);
       fetchData();
     }
-  }, [selectedOption, dateValue]);
+  }, [selectedOption, dateValue, monthValue, label]);
   return /* @__PURE__ */ jsxs("div", { className: `${css$2.container} theme-container`, children: [
     /* @__PURE__ */ jsx("span", { className: css$2.title, children: "Overview Statistics" }),
     /* @__PURE__ */ jsx("div", { className: `${css$2.cards} grey-container`, children: /* @__PURE__ */ jsxs("div", { children: [
       /* @__PURE__ */ jsx("div", { className: css$2.card, children: /* @__PURE__ */ jsx("select", { id: "dynamicSelect", value: selectedOption, onChange: handleSelectChange, children: options.map((option) => /* @__PURE__ */ jsx("option", { value: option.uuid, children: option.sensorName })) }) }),
-      /* @__PURE__ */ jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsx(LocalizationProvider, { dateAdapter: AdapterDayjs, children: /* @__PURE__ */ jsx(
+      /* @__PURE__ */ jsx("div", { className: `${css$2.card} ${css$2.datePickerContainer}`, children: /* @__PURE__ */ jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsx(LocalizationProvider, { dateAdapter: AdapterDayjs, children: label == "Daily Summary Dashboard" ? /* @__PURE__ */ jsx(
         DatePicker,
         {
+          views: ["year", "month", "day"],
           value,
           onChange: (newValue) => setValue(newValue),
           className: `${css$2.datePicker}`,
@@ -109874,26 +109910,34 @@ const Statistics = ({ handleData }) => {
           maxDate,
           format: "DD-MM-YYYY"
         }
-      ) }) })
+      ) : /* @__PURE__ */ jsx(
+        DatePicker,
+        {
+          views: ["month", "year"],
+          value,
+          onChange: (newValue) => setValue(newValue),
+          maxDate,
+          className: `${css$2.datePicker}`,
+          minDate: minMonthDate
+        }
+      ) }) }) })
     ] }) }),
     /* @__PURE__ */ jsxs("div", { children: [
-      /* @__PURE__ */ jsx(StatisticsChart, { uom: uomData, actualData, predictedData, chartTime, chartKey }),
-      /* @__PURE__ */ jsxs("p", { className: `${css$2.chartTitle}`, children: [
-        "Actual V/S Prediction ",
-        uomData
-      ] })
+      /* @__PURE__ */ jsx(StatisticsChart, { lab: label, uom: uomData, actualData, predictedData, chartTime, chartKey }),
+      /* @__PURE__ */ jsx("p", { className: `${css$2.chartTitle}`, children: "Actual V/S Prediction" })
     ] })
   ] });
 };
-const container = "_container_f0tud_1";
-const dashboard = "_dashboard_f0tud_17";
-const dashboardHead = "_dashboardHead_f0tud_31";
-const head = "_head_f0tud_43";
-const durationButton = "_durationButton_f0tud_65";
-const cards = "_cards_f0tud_83";
-const card = "_card_f0tud_83";
-const cardHead = "_cardHead_f0tud_105";
-const cardAmount = "_cardAmount_f0tud_137";
+const container = "_container_gyebw_1";
+const dashboard = "_dashboard_gyebw_17";
+const dashboardHead = "_dashboardHead_gyebw_31";
+const head = "_head_gyebw_43";
+const durationButton = "_durationButton_gyebw_65";
+const cards = "_cards_gyebw_83";
+const card = "_card_gyebw_83";
+const cardHead = "_cardHead_gyebw_105";
+const cardAmount = "_cardAmount_gyebw_137";
+const dailyBtn = "_dailyBtn_gyebw_161";
 const css = {
   container,
   dashboard,
@@ -109903,31 +109947,30 @@ const css = {
   cards,
   card,
   cardHead,
-  cardAmount
+  cardAmount,
+  dailyBtn
 };
 const Dashboard = () => {
   const [receivedData, setReceivedData] = reactExports.useState(null);
   const handleData = (data) => {
     setReceivedData(data);
   };
+  const [buttonLabel, setButtonLabel] = reactExports.useState("Daily Summary Dashboard");
+  const handleButtonClick = () => {
+    setButtonLabel((prevLabel) => prevLabel === "Daily Summary Dashboard" ? "Monthly Summary Dashboard" : "Daily Summary Dashboard");
+  };
   return /* @__PURE__ */ jsx("div", { className: css.container, children: /* @__PURE__ */ jsxs("div", { className: css.dashboard, children: [
     /* @__PURE__ */ jsxs("div", { className: `${css.dashboardHead} theme-container`, children: [
-      /* @__PURE__ */ jsx("div", { className: css.head, children: /* @__PURE__ */ jsx("span", { children: "Summary Dashboard" }) }),
+      /* @__PURE__ */ jsx("div", { className: css.head, children: /* @__PURE__ */ jsx("span", { children: /* @__PURE__ */ jsx("button", { title: "click to change", className: css.dailyBtn, onClick: handleButtonClick, children: buttonLabel }) }) }),
       /* @__PURE__ */ jsx("div", { className: css.cards, children: receivedData && receivedData.length && receivedData.map((card2, index2) => /* @__PURE__ */ jsxs("div", { className: css.card, children: [
-        /* @__PURE__ */ jsxs("div", { className: css.cardHead, children: [
-          /* @__PURE__ */ jsx("span", { children: card2.title }),
-          card2.amount ? /* @__PURE__ */ jsxs("span", { children: [
-            "+",
-            card2.change
-          ] }) : /* @__PURE__ */ jsx("span", { children: " " })
-        ] }),
+        /* @__PURE__ */ jsx("div", { className: css.cardHead, children: /* @__PURE__ */ jsx("span", { children: card2.title }) }),
         /* @__PURE__ */ jsxs("div", { className: css.cardAmount, children: [
           /* @__PURE__ */ jsx("span", { children: card2.amount }),
-          /* @__PURE__ */ jsx("span", { children: card2.hour })
+          card2.amount ? /* @__PURE__ */ jsx("span", { children: card2.hour }) : /* @__PURE__ */ jsx("span", { children: " " })
         ] })
       ] }, card2.id)) })
     ] }),
-    /* @__PURE__ */ jsx(Statistics, { handleData })
+    /* @__PURE__ */ jsx(Statistics, { label: buttonLabel, handleData })
   ] }) });
 };
 const App = () => {

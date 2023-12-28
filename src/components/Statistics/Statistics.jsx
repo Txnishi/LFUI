@@ -10,7 +10,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import getChartData from '../../data/ChartData';
+import { getDailyChartData } from '../../data/ChartData';
+import { getMonthlyChartData } from '../../data/ChartData';
 import axios from "axios";
 import { cardsData as initialCardsData } from '../../data/index';
 
@@ -32,7 +33,7 @@ const theme = createTheme({
 
 
 
-const Statistics = ({ handleData }) => {
+const Statistics = ({ handleData, label }) => {
 
     const [data, setData] = useState({});
     const [options, setOptions] = useState([]);
@@ -54,6 +55,15 @@ const Statistics = ({ handleData }) => {
     const [predMaxHour, setPredMaxHour] = useState('');
 
 
+    const [actMonthlySum, setActMonthlySum] = useState('');
+    const [actMaxDate, setActMaxDate] = useState('');
+    const [actMonthlyMaxDemand, setActMonthlyMaxDemand] = useState('');
+
+    const [predMonthlySum, setPredMonthlySum] = useState('');
+    const [predMaxDate, setPredMaxDate] = useState('');
+    const [predMonthlyMaxDemand, setPredMonthlyMaxDemand] = useState('');
+
+
 
     const [value, setValue] = useState(dayjs.extend(customParseFormat));
 
@@ -67,8 +77,16 @@ const Statistics = ({ handleData }) => {
 
     const dateValue = `${value.$y}-${month()}-${day()}`;
 
+    const monthValue = `${value.$y}-${month()}`;
+
+
+
     const minDate = dayjs('2023-11-01');
     const maxDate = dayjs().endOf('month');
+
+    const minMonthDate = dayjs('2023-11');
+
+
 
 
     //api integration to get sensor data 
@@ -100,17 +118,40 @@ const Statistics = ({ handleData }) => {
             sensorData();
         }
 
+        console.log(monthValue);
+        console.log(dateValue);
+
         const fetchData = async () => {
             try {
-                const collectedData = await getChartData(selectedOption, dateValue);
 
-                setPredDailyDemand(collectedData.pred_max_value);
-                setPredMaxHour(collectedData.pred_max_hour);
-                setPredDailySum(collectedData.pred_daily_sum);
+                let collectedData = "NULL";
+                if (label == "Daily Summary Dashboard") {
+                    collectedData = await getDailyChartData(selectedOption, dateValue);
 
-                setActualDailyDemand(collectedData.actual_max_value);
-                setActualMaxHour(collectedData.actual_max_hour);
-                setActualDailySum(collectedData.actual_daily_sum);
+                    setPredDailyDemand(collectedData.pred_max_value);
+                    setPredMaxHour(collectedData.pred_max_hour);
+                    setPredDailySum(collectedData.pred_daily_sum);
+
+                    setActualDailyDemand(collectedData.actual_max_value);
+                    setActualMaxHour(collectedData.actual_max_hour);
+                    setActualDailySum(collectedData.actual_daily_sum);
+                } else {
+                    collectedData = await getMonthlyChartData(selectedOption, monthValue);
+
+                    setPredMonthlyMaxDemand(collectedData.pred_max_date_value);
+                    setPredMaxDate(collectedData.pred_max_date);
+                    setPredMonthlySum(collectedData.pred_monthly_sum);
+
+                    setActMaxDate(collectedData.act_max_date);
+                    setActMonthlyMaxDemand(collectedData.act_max_date_value);
+                    setActMonthlySum(collectedData.act_monthly_sum);
+                }
+
+                if (collectedData === "NULL") {
+                    return;
+                }
+
+
 
                 if (collectedData.data) {
 
@@ -124,28 +165,32 @@ const Statistics = ({ handleData }) => {
                 }
 
                 console.log("receiving", actualDailySum);
+
+
+
+
                 const fetchedData = [
                     {
                         title: "Total Actual kWh",
                         change: 24,
-                        amount: collectedData.actual_daily_sum,
-                    },
-                    {
-                        title: "Max Demand(Actual)",
-                        change: -14,
-                        amount: collectedData.actual_max_value,
-                        hour: collectedData.actual_max_hour + 'hh',
+                        amount: collectedData.actual_daily_sum || collectedData.act_monthly_sum,
                     },
                     {
                         title: "Total Predicted kWh",
                         change: 18,
-                        amount: collectedData.pred_daily_sum,
+                        amount: collectedData.pred_daily_sum || collectedData.pred_monthly_sum,
+                    },
+                    {
+                        title: "Max Demand(Actual)",
+                        change: -14,
+                        amount: collectedData.actual_max_value || collectedData.act_max_date_value,
+                        hour: collectedData.act_max_date || collectedData.actual_max_hour + 'hh',
                     },
                     {
                         title: "Max Demand(Predicted)",
                         change: 18,
-                        amount: collectedData.pred_max_value,
-                        hour: collectedData.pred_max_hour + 'hh',
+                        amount: collectedData.pred_max_value || collectedData.pred_max_date_value,
+                        hour: collectedData.pred_max_date || collectedData.pred_max_hour + 'hh',
                     },
                 ]
 
@@ -157,12 +202,12 @@ const Statistics = ({ handleData }) => {
         };
 
 
-        if (selectedOption) {
-            setChartKey(`${selectedOption}-${dateValue}`);
+        if (selectedOption || label) {
+            setChartKey(`${selectedOption}-${dateValue}-${label}-${monthValue}`);
             fetchData();
         }
 
-    }, [selectedOption, dateValue]);
+    }, [selectedOption, dateValue, monthValue, label]);
 
     // useEffect(() => {
     //     // [{
@@ -179,7 +224,12 @@ const Statistics = ({ handleData }) => {
             <div className={`${css.cards} grey-container`}>
                 <div>
 
-
+                    {/* <div className={css.card}>
+                        <select>
+                            <option value="1">sensor 1</option>
+                            <option value="2">sensor 2</option>
+                        </select>
+                    </div> */}
                     <div className={css.card}>
                         <select id="dynamicSelect" value={selectedOption} onChange={handleSelectChange}>
                             {/* <option value="">Select Sensor</option> */}
@@ -191,25 +241,35 @@ const Statistics = ({ handleData }) => {
                         </select>
                     </div>
 
-                    {/* <div className={css.card}> */}
+                    <div className={`${css.card} ${css.datePickerContainer}`}>
 
-                    <ThemeProvider theme={theme}>
+                        <ThemeProvider theme={theme}>
 
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <DatePicker
-                                value={value}
-                                onChange={(newValue) => setValue(newValue)}
-                                className={`${css.datePicker}`}
-                                minDate={minDate}
-                                maxDate={maxDate}
-                                format="DD-MM-YYYY"
-                            />
-                        </LocalizationProvider>
-                    </ThemeProvider>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                {(label == 'Daily Summary Dashboard') ?
+                                    (<DatePicker
+                                        views={['year', 'month', 'day']}
+                                        value={value}
+                                        onChange={(newValue) => setValue(newValue)}
+                                        className={`${css.datePicker}`}
+                                        minDate={minDate}
+                                        maxDate={maxDate}
+                                        format="DD-MM-YYYY"
+                                    />) : (
+                                        <DatePicker
+                                            views={['month', 'year']}
+                                            value={value}
+                                            onChange={(newValue) => setValue(newValue)}
+                                            maxDate={maxDate}
+                                            className={`${css.datePicker}`}
+                                            minDate={minMonthDate}
+                                        />)
+                                }
+                            </LocalizationProvider>
+                        </ThemeProvider>
 
+                    </div>
 
-
-                    {/* </div> */}
                     {/* 
                     <div className={css.arrowIcon}>
                         <SlCalender />
@@ -233,8 +293,8 @@ const Statistics = ({ handleData }) => {
 
 
             <div >
-                <StatisticsChart uom={uomData} actualData={actualData} predictedData={predictedData} chartTime={chartTime} chartKey={chartKey} />
-                <p className={`${css.chartTitle}`}>Actual V/S Prediction {uomData}</p>
+                <StatisticsChart lab={label} uom={uomData} actualData={actualData} predictedData={predictedData} chartTime={chartTime} chartKey={chartKey} />
+                <p className={`${css.chartTitle}`}>Actual V/S Prediction</p>
             </div>
 
         </div>
