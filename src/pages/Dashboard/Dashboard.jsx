@@ -48,11 +48,15 @@ const Dashboard = () => {
                   </div>
 
                   <div className={css.cardAmount}>
-                    <span>{card.amount}</span>
+                    {card.amount ? (
+                      <span>{card.amount}</span>
+                    ) : (
+                      <span>--</span>
+                    )}
                     {card.amount ? (
                       <span>{card.hour}</span>
                     ) : (
-                      <span> </span>
+                      <span>--</span>
                     )
                     }
 

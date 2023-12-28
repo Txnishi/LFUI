@@ -109965,8 +109965,8 @@ const Dashboard = () => {
       /* @__PURE__ */ jsx("div", { className: css.cards, children: receivedData && receivedData.length && receivedData.map((card2, index2) => /* @__PURE__ */ jsxs("div", { className: css.card, children: [
         /* @__PURE__ */ jsx("div", { className: css.cardHead, children: /* @__PURE__ */ jsx("span", { children: card2.title }) }),
         /* @__PURE__ */ jsxs("div", { className: css.cardAmount, children: [
-          /* @__PURE__ */ jsx("span", { children: card2.amount }),
-          card2.amount ? /* @__PURE__ */ jsx("span", { children: card2.hour }) : /* @__PURE__ */ jsx("span", { children: " " })
+          card2.amount ? /* @__PURE__ */ jsx("span", { children: card2.amount }) : /* @__PURE__ */ jsx("span", { children: "--" }),
+          card2.amount ? /* @__PURE__ */ jsx("span", { children: card2.hour }) : /* @__PURE__ */ jsx("span", { children: "--" })
         ] })
       ] }, card2.id)) })
     ] }),
