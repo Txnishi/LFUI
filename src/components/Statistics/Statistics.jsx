@@ -91,31 +91,79 @@ const Statistics = ({ handleData, label }) => {
 
     //api integration to get sensor data 
 
+    // const sensorData = async () => {
+    //     const ans = await axios.get(
+    //         'http://13.127.57.185:5000/get_sensorList'
+    //     );
+
+    //     const gotData = ans.data;
+    //     const uomData = gotData.sensorList[0]['UOM'];
+    //     setUomData(uomData);
+    //     console.log(gotData);
+
+    //     setOptions(gotData.sensorList);
+    //     setSelectedOption(gotData.sensorList[0]['uuid']);
+    // }
+
+
+    // const fetchUomData = (selectedOption) => {
+    //     for (let i = 0; i < 30; i++) {
+    //         if (options[i]['uuid'] == selectedOption) {
+    //             setUomData(options[i]['UOM']);
+    //             console.log(options[i]['UOM']);
+    //         }
+    //     }
+
+    // };
+
+    // const handleSelectChange = (event) => {
+    //     const newSelectedOption = event.target.value;
+    //     console.log('bottt' + newSelectedOption);
+    //     setSelectedOption(newSelectedOption);
+    //     fetchUomData(newSelectedOption);
+    // };
+
     const sensorData = async () => {
-        const ans = await axios.get(
-            'http://13.127.57.185:5000/get_sensorList'
-        );
+        try {
+            const ans = await axios.get('http://13.127.57.185:5000/get_sensorList');
+            const gotData = ans.data;
 
-        const gotData = ans.data;
-        const uomData = gotData.sensorList[0]['UOM'];
-        setUomData(uomData);
-        console.log(gotData);
+            if (gotData && gotData.sensorList && gotData.sensorList.length > 0) {
+                const uomData = gotData.sensorList[0]['UOM'];
+                setUomData(uomData);
+                console.log(gotData);
 
-        setOptions(gotData.sensorList);
-        setSelectedOption(gotData.sensorList[0]['uuid']);
-    }
-
-
-    const handleSelectChange = (event) => {
-        console.log(event.target.value)
-        setSelectedOption(event.target.value);
+                setOptions(gotData.sensorList);
+                setSelectedOption(gotData.sensorList[0]['uuid']);
+            }
+        } catch (error) {
+            console.error('Error fetching sensor data:', error);
+        }
     };
 
+    const fetchUomData = (selectedOption) => {
+        const foundOption = options.find(option => option['uuid'] === selectedOption);
+
+        if (foundOption) {
+            setUomData(foundOption['UOM']);
+            console.log(foundOption['UOM']);
+        }
+    };
+
+    const handleSelectChange = (event) => {
+        const newSelectedOption = event.target.value;
+        console.log('bottt' + newSelectedOption);
+        setSelectedOption(newSelectedOption);
+    };
 
 
     useEffect(() => {
         if (!selectedOption) {
             sensorData();
+        }
+
+        if (selectedOption !== null) {
+            fetchUomData(selectedOption);
         }
 
         console.log(monthValue);
@@ -207,7 +255,7 @@ const Statistics = ({ handleData, label }) => {
             fetchData();
         }
 
-    }, [selectedOption, dateValue, monthValue, label]);
+    }, [selectedOption, options, dateValue, monthValue, label]);
 
     // useEffect(() => {
     //     // [{

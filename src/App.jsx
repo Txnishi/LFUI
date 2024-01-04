@@ -5,6 +5,7 @@ import Layout from './components/Layout/Layout';
 import Admin from './pages/Admin/Admin';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Experiment from './pages/Experiment/Experiment';
 
 
 const App = () => {
@@ -16,7 +17,7 @@ const App = () => {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<Admin />} />
-
+          <Route path="/experiment" element={<Experiment />} />
         </Route>
         <Route path="/login" element={<Login />} />
 
