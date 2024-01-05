@@ -7,6 +7,13 @@
   justify-content: center;
 }
 
+.mainContainer {
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  margin: 0rem 4rem;
+}
+
 .customButton {
   text-align: center;
   width: 280px;
@@ -24,11 +31,9 @@
   box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
     7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   outline: none;
-  background-image: linear-gradient(
-    317deg,
-    rgba(255, 70, 70, 0.99) 0%,
-    rgba(244, 137, 65, 0.99) 74%
-  );
+  background-image: linear-gradient(317deg,
+      rgba(255, 70, 70, 0.99) 0%,
+      rgba(244, 137, 65, 0.99) 74%);
   background-color: rgba(255, 70, 70, 0.99);
 }
 
@@ -54,11 +59,9 @@
 
 .customButton:hover {
   background-color: rgba(244, 137, 65, 0.99);
-  background-image: linear-gradient(
-    315deg,
-    rgba(244, 137, 65, 0.99) 0%,
-    rgba(255, 70, 70, 0.99) 74%
-  );
+  background-image: linear-gradient(315deg,
+      rgba(244, 137, 65, 0.99) 0%,
+      rgba(255, 70, 70, 0.99) 74%);
 }
 
 .customButton:before,
@@ -76,20 +79,25 @@
   border-radius: 30px;
   transition: all 0.3s ease;
 }
+
 .customButton:before {
   height: 0%;
   width: 0.1px;
 }
+
 .customButton:after {
   width: 0%;
   height: 0.1px;
 }
+
 .customButton:hover:before {
   height: 100%;
 }
+
 .customButton:hover:after {
   width: 100%;
 }
+
 .customButton span:before,
 .customButton span:after {
   position: absolute;
@@ -105,17 +113,21 @@
   border-radius: 30px;
   transition: all 0.3s ease;
 }
+
 .customButton span:before {
   width: 0.1px;
   height: 0%;
 }
+
 .customButton span:after {
   width: 0%;
   height: 0.1px;
 }
+
 .customButton span:hover:before {
   height: 100%;
 }
+
 .customButton span:hover:after {
   width: 100%;
 }

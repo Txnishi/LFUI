@@ -4,11 +4,9 @@
   --grey: rgba(255, 255, 255, 0.597);
   --orange: #ff805d;
   --green: rgb(54, 234, 54);
-  --orange-gradient: linear-gradient(
-    268.35deg,
-    rgba(255, 70, 70, 0.99) 3.47%,
-    rgba(255, 114, 70, 0.99) 60.18%
-  );
+  --orange-gradient: linear-gradient(268.35deg,
+      rgba(255, 70, 70, 0.99) 3.47%,
+      rgba(255, 114, 70, 0.99) 60.18%);
 }
 
 body {
@@ -19,8 +17,8 @@ body {
 * {
   box-sizing: border-box;
 }
+
 #dashboard {
-  height: 100vh;
   width: 100vw;
   background-color: var(--black);
   color: white;
@@ -41,6 +39,7 @@ body {
   background: #ff5d5d;
   filter: blur(90px);
 }
+
 .gradient-orange {
   position: absolute;
   width: 200px;
@@ -48,6 +47,7 @@ body {
   background: var(--orange);
   filter: blur(90px);
 }
+
 .gradient-blue {
   position: absolute;
   width: 200px;
@@ -59,12 +59,10 @@ body {
 .grey-container {
   border-top: 0.3px solid rgba(255, 255, 255, 0.185);
   border-bottom: 0.3px solid rgba(255, 255, 255, 0.185);
-  background: linear-gradient(
-    90deg,
-    rgba(53, 53, 53, 0) 1.21%,
-    rgba(53, 53, 53, 0.46) 49.45%,
-    rgba(53, 53, 53, 0) 103.83%
-  );
+  background: linear-gradient(90deg,
+      rgba(53, 53, 53, 0) 1.21%,
+      rgba(53, 53, 53, 0.46) 49.45%,
+      rgba(53, 53, 53, 0) 103.83%);
   padding: 1.5rem 1rem;
 }
 

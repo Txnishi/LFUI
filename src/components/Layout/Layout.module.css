@@ -1,5 +1,10 @@
 .container {
   display: flex;
+
+}
+
+.cont {
+  position: fixed !important;
 }
 
 .dashboard {
@@ -18,88 +23,92 @@
   z-index: -1;
 }
 
-.topBaseGradients>:nth-child(2)
-{
-    left: 40%;
-}
-.topBaseGradients>:nth-child(3)
-{
-    right: 0;
-}
-.header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.topBaseGradients>:nth-child(2) {
+  left: 40%;
 }
 
-.header > span {
+.topBaseGradients>:nth-child(3) {
+  right: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header>span {
   font-family: "Public Sans", sans-serif;
 }
-    
 
-.header>:nth-child(1)
-{
-    font-size: 1.2rem;
-}
-.searchBar{
-    background-color: rgba(255, 255, 255, 0.496);
-    width: 30%;
-    max-width: 25rem;
-    padding: 1rem 1rem;
-    border-radius: 8px;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    border: 2px solid rgb(63, 63, 63);
-    justify-content: center;
-    gap: 8px;
+
+.header>:nth-child(1) {
+  font-size: 1.2rem;
 }
 
-.searchBar>input{
-    background: transparent;
-    color: white;
-    outline: none;
-    border: none;
-    padding: 0;width: 100%;
-}
-.profile{
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile>img{
-    height: 50px;
-    width: 50px;
-}
-.details{
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.searchBar {
+  background-color: rgba(255, 255, 255, 0.496);
+  width: 30%;
+  max-width: 25rem;
+  padding: 1rem 1rem;
+  border-radius: 8px;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  border: 2px solid rgb(63, 63, 63);
+  justify-content: center;
+  gap: 8px;
 }
 
-.details>:nth-child(1)
-{
-    font-size: 1rem;
-    font-weight: bold;
+.searchBar>input {
+  background: transparent;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0;
+  width: 100%;
 }
-.content{
-    margin: auto;
-    display: flex;
-    height: 100%;
-    /* align-items: center; */
-    /* uncomment the aic, and make mt -4rem */
-    margin-top: 4rem;
+
+.profile {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
-.content>div{
-    width: 100%;
-    min-width: 75vh
+
+.profile>img {
+  height: 50px;
+  width: 50px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.details>:nth-child(1) {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.content {
+  margin: auto;
+  display: flex;
+  height: 100%;
+  /* align-items: center; */
+  /* uncomment the aic, and make mt -4rem */
+  margin-top: 4rem;
+}
+
+.content>div {
+  width: 100%;
+  min-width: 75vh
 }
 
 /* logout btn */
 
-.logout{
+.logout {
   width: 130px;
   height: 40px;
   color: #fff;
@@ -117,7 +126,7 @@
   outline: none;
 }
 
-.l_bt{
+.l_bt {
   background-color: #000000 0.1%;
   line-height: 42px;
   padding: 0;
@@ -145,26 +154,33 @@
     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
   transition: all 0.4s ease;
 }
-.l_bt:before{
-   height: 0%;
-   width: 2px;
+
+.l_bt:before {
+  height: 0%;
+  width: 2px;
 }
+
 .l_bt:after {
   width: 0%;
   height: 2px;
 }
+
 .l_bt:hover:before {
   height: 100%;
 }
+
 .l_bt:hover:after {
   width: 100%;
 }
-.l_bt:hover{
+
+.l_bt:hover {
   background: transparent;
 }
-.l_bt span:hover{
+
+.l_bt span:hover {
   color: #c797eb;
 }
+
 .l_bt span:before,
 .l_bt span:after {
   position: absolute;
@@ -178,18 +194,21 @@
     inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
   transition: all 0.4s ease;
 }
+
 .l_bt span:before {
   width: 2px;
   height: 0%;
 }
+
 .l_bt span:after {
   height: 2px;
   width: 0%;
 }
+
 .l_bt span:hover:before {
   height: 100%;
 }
+
 .l_bt span:hover:after {
   width: 100%;
 }
-  

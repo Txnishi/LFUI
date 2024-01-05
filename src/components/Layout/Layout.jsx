@@ -7,11 +7,14 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 const Layout = () => {
 
   const { pathname } = useLocation();
-  
+
 
   return (
     <div className={css.container}>
-      <Sidebar/>
+      {/* <div className={css.cont}>
+
+      </div> */}
+      <Sidebar />
 
 
       {/* making the dashboard as the default route */}
@@ -25,15 +28,15 @@ const Layout = () => {
           <div className="gradient-blue"></div>
         </div>
 
-        <div style={{padding: '1rem', borderRadius: '20px', margin: '30px 80px' }} className={`${css.header} theme-container`}>
+        <div style={{ padding: '1rem', borderRadius: '20px', margin: '30px 80px' }} className={`${css.header} theme-container`}>
 
           <span>{moment().format("dddd, Do MMM YYYY")}</span>
 
           <div /*className={css.searchBar}*/>
             {/* <BiSearch size={20} /> */}
             <img
-            width="200px" 
-            src="./logo.png" alt="logo image" />
+              width="200px"
+              src="./logo.png" alt="logo image" />
             {/* <input type="text" placeholder="Search" /> */}
           </div>
 

@@ -88,41 +88,6 @@ const Statistics = ({ handleData, label }) => {
 
 
 
-
-    //api integration to get sensor data 
-
-    // const sensorData = async () => {
-    //     const ans = await axios.get(
-    //         'http://13.127.57.185:5000/get_sensorList'
-    //     );
-
-    //     const gotData = ans.data;
-    //     const uomData = gotData.sensorList[0]['UOM'];
-    //     setUomData(uomData);
-    //     console.log(gotData);
-
-    //     setOptions(gotData.sensorList);
-    //     setSelectedOption(gotData.sensorList[0]['uuid']);
-    // }
-
-
-    // const fetchUomData = (selectedOption) => {
-    //     for (let i = 0; i < 30; i++) {
-    //         if (options[i]['uuid'] == selectedOption) {
-    //             setUomData(options[i]['UOM']);
-    //             console.log(options[i]['UOM']);
-    //         }
-    //     }
-
-    // };
-
-    // const handleSelectChange = (event) => {
-    //     const newSelectedOption = event.target.value;
-    //     console.log('bottt' + newSelectedOption);
-    //     setSelectedOption(newSelectedOption);
-    //     fetchUomData(newSelectedOption);
-    // };
-
     const sensorData = async () => {
         try {
             const ans = await axios.get('http://13.127.57.185:5000/get_sensorList');
@@ -152,7 +117,6 @@ const Statistics = ({ handleData, label }) => {
 
     const handleSelectChange = (event) => {
         const newSelectedOption = event.target.value;
-        console.log('bottt' + newSelectedOption);
         setSelectedOption(newSelectedOption);
     };
 
@@ -257,13 +221,7 @@ const Statistics = ({ handleData, label }) => {
 
     }, [selectedOption, options, dateValue, monthValue, label]);
 
-    // useEffect(() => {
-    //     // [{
-    //     //     actualSum,
-    //     //      predSum,
-    //     //       predDemand, predMaxHour, actualDemand, actualMaxHour]);
-    //     // console.log("yooooooo", actualSum, predSum, predDemand, predMaxHour, actualDemand, actualMaxHour, "poooo");
-    // }, [actualSum]);
+
 
     return (
         <div className={`${css.container} theme-container`}>

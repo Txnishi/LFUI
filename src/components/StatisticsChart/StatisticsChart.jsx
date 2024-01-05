@@ -102,6 +102,17 @@ const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chart
     }, []);
 
     // useEffect(() => {
+    //     console.log('Chart Data:', actualData, predictedData, chartTime);
+    //     console.log('Chart Key:', chartKey);
+
+    //     const wait = async () => {
+    //         await new Promise(resolve => setTimeout(resolve, 100));
+    //     }
+
+    //     wait();
+    // }, [actualData, predictedData, chartTime, chartKey]);
+
+    // useEffect(() => {
     //     console.log('Effect is running!');
     //     console.log(selectedOptionId);
     //     const fetchData = async () => {
