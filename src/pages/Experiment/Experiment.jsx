@@ -102,9 +102,7 @@ const Experiment = () => {
         }
     };
 
-
     useEffect(() => {
-
 
         //fetching Daily APIs
 
@@ -114,29 +112,26 @@ const Experiment = () => {
                 for (let i = 0; i < selectedNumber; i++) {
 
                     let num = i + 1;
-
                     let res;
-                    console.log(i, selectedNumber);
+
+                    // console.log(i, selectedNumber);
                     if (i === 0) {
                         console.log("1st api");
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOption}&date=${dateValue}`);
                     } else {
                         console.log("2nd api");
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
-                        console.log(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
+                        // console.log(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
                     }
 
                     const collectedData = res.data;
-                    console.log("nuuuuuu ", collectedData);
+                    // console.log("nuuuuuu ", collectedData);
 
                     if (collectedData.data) {
 
                         const actDataArr = collectedData.data.actual_data.map((data) => data.act_kwh);
                         const predDataArr = collectedData.data.predicted_data.map((data) => data.pre_kwh);
                         const chaTimeArr = collectedData.data.actual_data.map((data) => data.clock);
-
-
-
                         newChartsArray.push({ actData: actDataArr, predData: predDataArr, chaTime: chaTimeArr });
 
                     }
@@ -149,14 +144,11 @@ const Experiment = () => {
                     if (collectedData === "NULL") {
                         return;
                     }
-
-
                 };
 
-
-
                 setChartsArray(newChartsArray)
-                console.log("huuuuuuu ", chartsArray);
+                console.log("chartArray = ", chartsArray);
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

@@ -167,7 +167,7 @@ const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chart
     const option = {
 
         color: ['var(--orange)', 'blue'],
-        animationDuration: 6500,
+        animationDuration: 3000,
 
         toolbox: {
             feature: {
