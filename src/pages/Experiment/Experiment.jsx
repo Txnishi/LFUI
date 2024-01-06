@@ -111,17 +111,18 @@ const Experiment = () => {
                 let newChartsArray = [];
                 for (let i = 0; i < selectedNumber; i++) {
 
-                    let num = i + 1;
+                    let num = i;
                     let res;
 
                     // console.log(i, selectedNumber);
                     if (i === 0) {
                         console.log("1st api");
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOption}&date=${dateValue}`);
+                        console.log(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOption}&date=${dateValue}`);
                     } else {
                         console.log("2nd api");
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
-                        // console.log(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
+                        console.log(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
                     }
 
                     const collectedData = res.data;
