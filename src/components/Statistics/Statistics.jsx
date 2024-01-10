@@ -65,7 +65,7 @@ const Statistics = ({ handleData, label }) => {
 
 
 
-    const [value, setValue] = useState(dayjs.extend(customParseFormat));
+    // const [value, setValue] = useState(dayjs.extend(customParseFormat));
 
     const month = () => {  //month variable so that its in the form of 01,02,....09,10..  and to make it 1 indexed
         const val = (value.$M + 1).toString();
@@ -75,11 +75,16 @@ const Statistics = ({ handleData, label }) => {
         return (value.$D < 10) ? "0" + value.$D : value.$D;
     }
 
-    const dateValue = `${value.$y}-${month()}-${day()}`;
+    // const dateValue = `${value.$y}-${month()}-${day()}`;
 
-    const monthValue = `${value.$y}-${month()}`;
+    // const monthValue = `${value.$y}-${month()}`;
 
+    const [value, setValue] = useState(() => dayjs().subtract(1, 'month').startOf('month'));
 
+    console.log('picked date value = ', value);
+
+    const dateValue = value.format('YYYY-MM-DD');
+    const monthValue = value.format('YYYY-MM');
 
     const minDate = dayjs('2023-11-01');
     const maxDate = dayjs().endOf('month');

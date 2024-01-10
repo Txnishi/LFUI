@@ -9,7 +9,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import StatisticsChart from '../../components/StatisticsChart/StatisticsChart';
 import axios from "axios";
 
-
 const theme = createTheme({
     palette: {
         mode: 'dark',
@@ -29,17 +28,24 @@ const Experiment = () => {
     const numbers = Array.from({ length: 10 }, (_, index) => index + 1);
     let [selectedNumber, setSelectedNumber] = useState('1');
 
-    const [value, setValue] = useState(dayjs.extend(customParseFormat));
+    // const [value, setValue] = useState(dayjs.extend(customParseFormat));
 
-    const month = () => {  //month variable so that its in the form of 01,02,....09,10..  and to make it 1 indexed
-        const val = (value.$M + 1).toString();
-        return (value.$M < 9) ? "0" + val : val;
-    }
-    const day = () => {
-        return (value.$D < 10) ? "0" + value.$D : value.$D;
-    }
+    // const month = () => {  //month variable so that its in the form of 01,02,....09,10..  and to make it 1 indexed
+    //     const val = (value.$M + 1).toString();
+    //     return (value.$M < 9) ? "0" + val : val;
+    // }
+    // const day = () => {
+    //     return (value.$D < 10) ? "0" + value.$D : value.$D;
+    // }
 
-    const dateValue = `${value.$y}-${month()}-${day()}`;
+    // console.log("picked date value = ", value);
+
+    // let dateValue = `${value.$y}-${month()}-${day()}`;
+
+    // const defaultDate = dayjs().startOf('month');
+
+    const [value, setValue] = useState(() => dayjs().subtract(1, 'month').date(1).startOf('month'));
+    let dateValue = value.format('YYYY-MM-DD');
 
     const minDate = dayjs('2023-11-01');
     const maxDate = dayjs().endOf('month');
@@ -116,11 +122,14 @@ const Experiment = () => {
 
                     // console.log(i, selectedNumber);
                     if (i === 0) {
+
+                        dateValue = value.format('YYYY-MM-DD');
                         console.log("1st api");
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOption}&date=${dateValue}`);
                         console.log(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOption}&date=${dateValue}`);
                     } else {
                         console.log("2nd api");
+                        dateValue = value.add(i, 'day').format('YYYY-MM-DD');
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
                         console.log(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
                     }
