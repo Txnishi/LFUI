@@ -5,6 +5,7 @@ import { FaTasks } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import { RiAdminFill } from "react-icons/ri";
 import { AiFillExperiment } from "react-icons/ai";
+import { RiLoginBoxLine } from "react-icons/ri";
 import { AiOutlineExperiment } from "react-icons/ai";
 // import { MdAdminPanelSettings } from "react-icons/md";
 // import { MdOulineAdminPanelSettings } from "react-icons/md";
@@ -16,6 +17,10 @@ const Sidebar = () => {
 
 
             <div className={css.menu}>
+                {/* <NavLink to="login" className={css.item} title={'Login'}>
+                    <RiLoginBoxLine size={30} />
+
+                </NavLink> */}
                 <NavLink to="dashboard" className={css.item} title={"Dashboard"}>
                     <MdSpaceDashboard size={30} />
                 </NavLink>
@@ -30,6 +35,7 @@ const Sidebar = () => {
                     <AiFillExperiment size={30} />
 
                 </NavLink>
+
 
             </div>
         </div>
