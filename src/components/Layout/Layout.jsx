@@ -3,10 +3,16 @@ import css from "./Layout.module.css";
 // import { BiSearch } from "react-icons/bi";
 import Sidebar from "../Sidebar/Sidebar";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import React, { useState } from "react";
 
 const Layout = () => {
 
   const { pathname } = useLocation();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleLogout = () => {
+    window.location.href = "/";
+  };
 
 
   return (
@@ -42,7 +48,7 @@ const Layout = () => {
 
 
           <div>
-            <button className={`${css.logout} ${css.l_bt}`} ><span>Log out</span></button>
+            <button className={`${css.logout} ${css.l_bt}`} onClick={() => setShowConfirmation(true)}><span>Log out</span></button>
           </div>
 
           {/* <div className={css.profile}>
@@ -61,6 +67,18 @@ const Layout = () => {
           <Outlet />
         </div>
       </div>
+
+      {showConfirmation && (
+        <div className={css.popupBackground}>
+          <div className={css.popup}>
+            <p>Are you sure you want to log out?</p>
+            <div>
+              <button onClick={handleLogout}>Yes</button>
+              <button onClick={() => setShowConfirmation(false)}>No </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -67,8 +67,11 @@ export default function SignIn() {
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 padding: 4,
-                                width: '100%',
-                                maxWidth: 400, // Adjust this value as needed
+                                width: '45%',
+                                height: '50%',
+                                backgroundColor: 'white', // Change color as needed
+                                borderRadius: 20, // Add border radius
+                                // maxWidth: 500, // Adjust this value as needed
                             }}
                         >
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
