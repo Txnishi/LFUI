@@ -48,7 +48,7 @@ const Layout = () => {
 
 
           <div>
-            <button className={`${css.logout} ${css.l_bt}`} onClick={() => setShowConfirmation(true)}><span>Log out</span></button>
+            <button className={`${css.logout} ${css.l_bt}`} onClick={() => setShowConfirmation(true)}><span>Sign out</span></button>
           </div>
 
           {/* <div className={css.profile}>
@@ -71,7 +71,7 @@ const Layout = () => {
       {showConfirmation && (
         <div className={css.popupBackground}>
           <div className={css.popup}>
-            <p>Are you sure you want to log out?</p>
+            <p>Are you sure you want to sign out?</p>
             <div>
               <button onClick={handleLogout}>Yes</button>
               <button onClick={() => setShowConfirmation(false)}>No </button>

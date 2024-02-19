@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 
-export default function SignIn() {
+export default function SignIn({ onSignUp }) {
     const [email, setEmail] = useState(''); // State variable for email
     const [password, setPassword] = useState(''); // State variable for password
     let navigate = useNavigate();
@@ -124,9 +124,9 @@ export default function SignIn() {
                                         </Link>
                                     </Grid>
                                     <Grid item>
-                                        <Link href="#" variant="body2">
+                                        <Typography color="blue" variant="body2" onClick={onSignUp} style={{ cursor: 'pointer' }}>
                                             {"Don't have an account? Sign Up"}
-                                        </Link>
+                                        </Typography>
                                     </Grid>
                                 </Grid>
                             </Box>
