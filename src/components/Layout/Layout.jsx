@@ -42,7 +42,7 @@ const Layout = () => {
             {/* <BiSearch size={20} /> */}
             <img
               width="200px"
-              src="./logo.png" alt="logo image" />
+              src="/logo.png" alt="logO image" />
             {/* <input type="text" placeholder="Search" /> */}
           </div>
 

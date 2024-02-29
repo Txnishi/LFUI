@@ -80,7 +80,7 @@ const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chart
 
     // const [chartTime, setChartTime] = useState([]);
 
-    console.log("lalala", chartKey);
+    console.log("chart Key", chartKey);
     console.log(actualData);
 
     const [actualSum, setActualSum] = useState('');

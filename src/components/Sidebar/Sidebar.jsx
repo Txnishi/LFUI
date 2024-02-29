@@ -13,7 +13,7 @@ const Sidebar = () => {
     return (
         <div className={css.container}>
 
-            <img src="./logo.png" alt="logo" className={css.logo} />
+            <img src="\logo.png" alt="lOSgo" className={css.logo} />
 
 
             <div className={css.menu}>

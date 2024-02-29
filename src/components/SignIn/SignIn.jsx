@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -14,126 +14,78 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 
 export default function SignIn({ onSignUp }) {
-    const [email, setEmail] = useState(''); // State variable for email
-    const [password, setPassword] = useState(''); // State variable for password
-    let navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
-        setEmail(event.target.value); // Update email state
+        setEmail(event.target.value);
     };
 
     const handlePasswordChange = (event) => {
-        setPassword(event.target.value); // Update password state
+        setPassword(event.target.value);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Check if email and password match the predefined values
         if (email === 'shubham.bhatt@radius.co.in' && password === 'password1') {
             console.log('Login successful');
             navigate('/layout/dashboard');
         } else {
             console.log('Invalid email or password');
-            // Handle invalid login
         }
     };
 
     return (
-        <>
-            <Grid container component="main" sx={{ height: '100vh' }}>
-                <CssBaseline />
-                <Grid item xs={12} sm={8} md={7}>
-                    <Box
-                        sx={{
-                            backgroundImage: 'none',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: '100%',
-                            paddingRight: 4, // Added padding to create space from the right
-                        }}
-                    >
-                        <Box
-                            component={Paper}
-                            elevation={6}
-                            sx={{
-                                my: 8,
-                                mx: 4,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                padding: 4,
-                                width: '45%',
-                                height: '50%',
-                                backgroundColor: 'white', // Change color as needed
-                                borderRadius: 20, // Add border radius
-                                // maxWidth: 500, // Adjust this value as needed
-                            }}
-                        >
-                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                                <LockOutlinedIcon />
-                            </Avatar>
-                            <Typography component="h1" variant="h5">
-                                Sign in
-                            </Typography>
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    autoFocus
-                                    value={email}
-                                    onChange={handleEmailChange}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                />
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Sign In
-                                </Button>
-                                <Grid container>
-                                    <Grid item xs>
-                                        <Link href="#" variant="body2">
-                                            Forgot password?
-                                        </Link>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography color="blue" variant="body2" onClick={onSignUp} style={{ cursor: 'pointer' }}>
-                                            {"Don't have an account? Sign Up"}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        </Box>
+        <Grid container component="main" sx={{ height: '100vh' }}>
+            <CssBaseline />
+            <Grid item md={5} sx={{ margin: 'auto' }}>
+                <Paper elevation={2} sx={{ p: 4, textAlign: 'center', backgroundColor: 'white', borderRadius: 20 }}>
+                    <Avatar sx={{ m: 'auto', bgcolor: 'secondary.main' }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
+                        Sign in
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            value={email}
+                            onChange={handleEmailChange}
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                        />
+                        <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
+                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+                            Sign In
+                        </Button>
+                        <Link href="#" variant="body2" sx={{ mt: 2 }}>
+                            Forgot password?
+                        </Link>
+                        <Typography variant="body2" sx={{ mt: 2 }}>
+                            Don't have an account? <Link onClick={onSignUp} style={{ cursor: 'pointer' }}>Sign Up</Link>
+                        </Typography>
                     </Box>
-                </Grid>
+                </Paper>
             </Grid>
-        </>
+        </Grid>
     );
 }

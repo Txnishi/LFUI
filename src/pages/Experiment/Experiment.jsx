@@ -129,13 +129,12 @@ const Experiment = () => {
                         console.log(`http://13.127.57.185:5000/getPredDataDaily?id=${selectedOption}&date=${dateValue}`);
                     } else {
                         console.log("2nd api");
-                        dateValue = value.add(i, 'day').format('YYYY-MM-DD');
+                        console.log(dateValue)
                         res = await axios.get(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
                         console.log(`http://13.127.57.185:5000/getPredDataDaily${num}?id=${selectedOption}&date=${dateValue}`);
                     }
 
                     const collectedData = res.data;
-                    // console.log("nuuuuuu ", collectedData);
 
                     if (collectedData.data) {
 
