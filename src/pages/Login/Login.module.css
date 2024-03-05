@@ -12,3 +12,109 @@ body {
 canvas {
     background-color: transparent;
 }
+
+
+@keyframes aurora {
+    from {
+        background-position: 50% 50%, 50% 50%;
+    }
+
+    to {
+        background-position: 350% 50%, 350% 50%;
+    }
+}
+
+.aurora {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    opacity: 0.5;
+    background-color: black;
+    --stripes: repeating-linear-gradient(100deg,
+            #fff 0%,
+            #fff 7%,
+            transparent 10%,
+            transparent 12%,
+            #fff 16%);
+    --stripesDark: repeating-linear-gradient(100deg,
+            #000 0%,
+            #000 7%,
+            transparent 10%,
+            transparent 12%,
+            #000 16%);
+    --rainbow: repeating-linear-gradient(100deg,
+            #60a5fa 10%,
+            #e879f9 15%,
+            #60a5fa 20%,
+            #5eead4 25%,
+            #60a5fa 30%);
+    background-image: var(--stripes), var(--rainbow);
+    background-size: 300%, 200%;
+    background-position: 50% 50%, 50% 50%;
+
+    filter: blur(10px) invert(100%);
+
+    mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+
+    pointer-events: none;
+}
+
+.aurora::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--stripes), var(--rainbow);
+    background-size: 200%, 100%;
+    animation: aurora 60s linear infinite;
+    background-attachment: fixed;
+    mix-blend-mode: difference;
+}
+
+.dark .aurora {
+    background-image: var(--stripesDark), var(--rainbow);
+    filter: blur(10px) opacity(50%) saturate(200%);
+}
+
+.dark .aurora::after {
+    background-image: var(--stripesDark), var(--rainbow);
+}
+
+/* .topBaseGradients {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20rem;
+    overflow: hidden;
+    z-index: 1;
+    justify-content: space-between;
+}
+
+.gradient-red {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: #ff5d5d;
+    filter: blur(90px);
+}
+
+.gradient-orange {
+    position: absolute;
+    left: 40%;
+    width: 200px;
+    height: 200px;
+    background: var(--orange);
+    filter: blur(90px);
+}
+
+.gradient-blue {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    right: 0;
+    background: #5dc9ff;
+    filter: blur(90px);
+} */

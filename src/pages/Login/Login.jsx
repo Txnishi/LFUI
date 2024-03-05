@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import css from './Login.module.css';
 import SignIn from '../../components/SignIn/SignIn';
 import SignUp from '../../components/SignUp/SignUp'; // Import SignUp component
 // import ForgotPassword from '../../components/ForgotPassword/ForgotPassword'; // Import ForgotPassword component
@@ -31,11 +32,12 @@ function Login() {
     return (
         <div style={{ position: 'relative', height: '100vh', display: 'flex' }}>
             <ParticlesBackground style={{ position: 'absolute', zIndex: -1, width: '100%', height: '100%' }} />
+            {/* <div className={`${css.aurora}`}></div> */}
             <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
                 {showSignIn && <SignIn onSignUp={handleSignUp} />}
                 {showSignUp && <SignUp onBackToSignIn={handleBackToSignIn} />}
             </div>
-            <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 5 }}>
                 <MapChart />
             </div>
         </div>

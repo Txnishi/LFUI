@@ -37,9 +37,9 @@ class ParticleCanvas {
 
     this.setSize();
 
-    this.maxLength = 80;
-    this.pointsNum = Math.floor((this.height * this.width) / 4000); // Number of points
-    this.ctx.fillStyle = "#000";
+    this.maxLength = 140;
+    this.pointsNum = Math.floor((this.height * this.width) / 18000); // Number of points
+    this.ctx.fillStyle = "#fff";
 
     // create initial points
     this.point = [];
@@ -49,7 +49,7 @@ class ParticleCanvas {
         this.width,
         this.height,
         this.maxLength,
-        "#000"
+        "#fff"
       );
     }
 
@@ -83,8 +83,8 @@ class ParticleCanvas {
     this.animation = requestAnimationFrame(this.frame);
 
     const gradient = this.ctx.createLinearGradient(0, 0, 0, this.height);
-    gradient.addColorStop(0, "#fff");
-    gradient.addColorStop(1, "#fff");
+    gradient.addColorStop(0, "#000");
+    gradient.addColorStop(1, "#000");
     this.ctx.fillStyle = gradient;
     this.ctx.fillRect(0, 0, this.width, this.height); // clear the canvas
 
@@ -115,7 +115,7 @@ class ParticleCanvas {
         if (dist < this.maxLength) {
           const opacity = scaleBetween(dist, 1, 0, 0, this.maxLength);
           // const opacity = 1;
-          this.ctx.strokeStyle = "rgba(0, 0, 0," + opacity + ")"; // 7, matched experimentally
+          this.ctx.strokeStyle = "rgba(255, 255, 255," + opacity + ")"; // 7, matched experimentally
           this.ctx.beginPath();
           this.ctx.moveTo(this.point[i].pos.x, this.point[i].pos.y); // to a point
           this.ctx.lineTo(this.point[j].pos.x, this.point[j].pos.y); // second
@@ -158,7 +158,7 @@ class Point {
     this.maxLength = maxLength;
     this.color = color;
 
-    const velocity = 4.5; // for constant velocity matched experimentally
+    const velocity = 2; // for constant velocity matched experimentally
 
     this.pos = {
       // position
