@@ -4,7 +4,11 @@ import SignIn from '../../components/SignIn/SignIn';
 import SignUp from '../../components/SignUp/SignUp'; // Import SignUp component
 // import ForgotPassword from '../../components/ForgotPassword/ForgotPassword'; // Import ForgotPassword component
 import MapChart from '../../components/MapChart/MapChart';
+import NeuralNetwork from '../../components/MapChart/NeuralNetwork';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei'
 import ParticlesBackground from '../../components/Particles/particlesBackground';
+import { Sphere } from '@react-three/drei';
 
 function Login() {
     const [showSignIn, setShowSignIn] = useState(true);
@@ -29,17 +33,28 @@ function Login() {
         // setShowForgotPassword(false);
     };
 
+
     return (
-        <div style={{ position: 'relative', height: '100vh', display: 'flex' }}>
-            <ParticlesBackground style={{ position: 'absolute', zIndex: -1, width: '100%', height: '100%' }} />
+        <div className={`${css.bg}`} style={{ position: 'relative', height: '100vh', display: 'flex' }}>
+            {/* <ParticlesBackground style={{ position: 'absolute', zIndex: -1, width: '100%', height: '100%' }} /> */}
             {/* <div className={`${css.aurora}`}></div> */}
-            <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
+            <div style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', zIndex: 6 }}>
                 {showSignIn && <SignIn onSignUp={handleSignUp} />}
                 {showSignUp && <SignUp onBackToSignIn={handleBackToSignIn} />}
             </div>
-            <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 5 }}>
-                <MapChart />
+            {/* <div style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 5 }}> */}
+            <div style={{ position: 'absolute', top: 0, left: '27%', width: '100%', height: '100%', zIndex: 5 }}>
+                <Canvas camera={{ position: [0, 0, 19] }} style={{ position: 'absolute', top: 0, left: 0, zIndex: 5 }}>
+                    <NeuralNetwork />
+                    <NeuralNetwork otherMesh={<Sphere scale={[8, 8, 8]} />} />
+                    <OrbitControls
+                        minDistance={18.75}
+                        maxDistance={18.75} />
+                </Canvas>
+
             </div>
+            {/* <MapChart style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} /> */}
+            {/* </div> */}
         </div>
     );
 }

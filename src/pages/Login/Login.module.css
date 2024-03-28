@@ -9,6 +9,10 @@ body {
     max-width: 100%;
 }
 
+.bg {
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)
+}
+
 canvas {
     background-color: transparent;
 }
@@ -80,6 +84,7 @@ canvas {
 .dark .aurora::after {
     background-image: var(--stripesDark), var(--rainbow);
 }
+
 
 /* .topBaseGradients {
     display: flex;

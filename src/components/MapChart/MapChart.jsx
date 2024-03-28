@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from 'gsap';
+import { Canvas } from '@react-three/fiber';
 
 const MapChart = () => {
     const containerRef = useRef(null);
@@ -92,7 +93,7 @@ const MapChart = () => {
         });
 
         globe = new THREE.Points(globeGeometry, mapMaterial);
-        scene.add(globe);
+        // scene.add(globe);
 
         globeMesh = new THREE.Mesh(
             globeGeometry,
@@ -102,7 +103,8 @@ const MapChart = () => {
                 opacity: 0.1,
             })
         );
-        scene.add(globeMesh);
+        // scene.add(globeMesh);
+        return globeMesh;
     }
 
 
@@ -324,13 +326,18 @@ const MapChart = () => {
     }
 
     return (
-        <div style={{ transform: 'translateX(0%)' }}>
-            <div className="globe-wrapper" ref={containerRef}>
-                <canvas id="globe-3d" ref={canvas3DRef}></canvas>
-                <canvas id="globe-2d-overlay" ref={canvas2DRef}></canvas>
-                <div className="globe-popup" ref={popupRef}></div>
-            </div>
-        </div>
+        // <div style={{ transform: 'translateX(0%)' }}>
+        //     <div className="globe-wrapper" ref={containerRef}>
+        //         <canvas id="globe-3d" ref={canvas3DRef}></canvas>
+        //         <canvas id="globe-2d-overlay" ref={canvas2DRef}></canvas>
+        //         <div className="globe-popup" ref={popupRef}></div>
+        //     </div>
+        // </div>
+        <Canvas>
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} />
+            <primitive ref={containerRef} object={createGlobe()} />
+        </Canvas>
     );
 };
 
@@ -384,6 +391,22 @@ export default MapChart;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------------------------------------------------------
 
 
 
