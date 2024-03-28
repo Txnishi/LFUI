@@ -9,7 +9,7 @@ export default function NeuralNetwork() {
     const linesGeometryRef = useRef()
 
     const maxParticleCount = 500
-    const particleCount = 300
+    const particleCount = 301
     const r = 10
     const rHalf = r / 2
     const maxConnections = 20

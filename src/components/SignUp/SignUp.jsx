@@ -32,33 +32,26 @@ export default function SignUp({ onBackToSignIn }) {
 
     return (
         <ThemeProvider theme={theme}>
-
-            <Grid container component="main" sx={{ height: '100vh' }}>
+            <Grid container component="main" sx={{ height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
                 <CssBaseline />
-                <Grid item xs={12} sm={8} md={7} component={Box} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingRight: 4 }}>
+                <Grid item md={6} component={Box} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Box
                         component="form"
                         elevation={6}
+                        onSubmit={handleSubmit}
                         sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center', // Add this line to vertically center content
-                            padding: 4,
-                            width: '45%',
-                            height: '65%',
-                            backgroundColor: 'white', // Change color as needed
-                            borderRadius: 20, // Add border radius
-                            // maxWidth: 500, // Adjust this value as needed
+                            textAlign: 'center',
+                            backgroundColor: 'transparent',
+                            borderRadius: 8,
+                            height: '90%',
+                            width: '80%',
+                            boxShadow: 'none'
                         }}
                     >
-
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 'auto', width: '50px', height: '50px', bgcolor: 'secondary.main', mt: 6 }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5" color="black">
+                        <Typography component="h1" variant="h5" sx={{ mt: 4 }}>
                             Sign up
                         </Typography>
                         <TextField
@@ -102,14 +95,14 @@ export default function SignUp({ onBackToSignIn }) {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, height: '3rem', fontSize: '1rem' }}
                         >
                             Sign Up
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Typography color="blue" variant="body2" onClick={onBackToSignIn} style={{ cursor: 'pointer' }}>
-                                    {"Already have an account? Sign in"}
+                                <Typography variant="body2" sx={{ mt: 3, fontSize: '1rem', textAlign: 'right' }}>
+                                    Already have an account? <Link onClick={onBackToSignIn} style={{ cursor: 'pointer' }}>Sign In</Link>
                                 </Typography>
                             </Grid>
                         </Grid>
