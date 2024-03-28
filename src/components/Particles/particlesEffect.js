@@ -101,29 +101,29 @@ class ParticleCanvas {
   }
 
   // update feature lines between points
-  updateLines() {
-    let dist = 0;
-    let dx = 0;
-    let dy = 0;
+  // updateLines() {
+  //   let dist = 0;
+  //   let dx = 0;
+  //   let dy = 0;
 
-    for (let i = 0; i < this.pointsNum - 1; ++i) {
-      for (let j = i + 1; j < this.pointsNum; ++j) {
-        dx = this.point[i].pos.x - this.point[j].pos.x;
-        dy = this.point[i].pos.y - this.point[j].pos.y;
-        dist = Math.sqrt(dx * dx + dy * dy); // the distance between two points on the plane
+  //   for (let i = 0; i < this.pointsNum - 1; ++i) {
+  //     for (let j = i + 1; j < this.pointsNum; ++j) {
+  //       dx = this.point[i].pos.x - this.point[j].pos.x;
+  //       dy = this.point[i].pos.y - this.point[j].pos.y;
+  //       dist = Math.sqrt(dx * dx + dy * dy); // the distance between two points on the plane
 
-        if (dist < this.maxLength) {
-          const opacity = scaleBetween(dist, 1, 0, 0, this.maxLength);
-          // const opacity = 1;
-          this.ctx.strokeStyle = "rgba(255, 255, 255," + opacity + ")"; // 7, matched experimentally
-          this.ctx.beginPath();
-          this.ctx.moveTo(this.point[i].pos.x, this.point[i].pos.y); // to a point
-          this.ctx.lineTo(this.point[j].pos.x, this.point[j].pos.y); // second
-          this.ctx.stroke();
-        }
-      }
-    }
-  }
+  //       if (dist < this.maxLength) {
+  //         const opacity = scaleBetween(dist, 1, 0, 0, this.maxLength);
+  //         // const opacity = 1;
+  //         this.ctx.strokeStyle = "rgba(255, 255, 255," + opacity + ")"; // 7, matched experimentally
+  //         this.ctx.beginPath();
+  //         this.ctx.moveTo(this.point[i].pos.x, this.point[i].pos.y); // to a point
+  //         this.ctx.lineTo(this.point[j].pos.x, this.point[j].pos.y); // second
+  //         this.ctx.stroke();
+  //       }
+  //     }
+  //   }
+  // }
 
   updateDelta(event) {
     let { deltaX, deltaY } = event;

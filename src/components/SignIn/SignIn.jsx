@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
 const theme = createTheme({
     palette: {
         mode: 'dark', // Set to 'dark' for dark mode
@@ -81,6 +82,7 @@ export default function SignIn({ onSignUp }) {
                                 value={password}
                                 onChange={handlePasswordChange}
                                 sx={{ width: 'calc(100% - 150px)' }}
+
                             />
                             <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
                             <Button type="submit" variant="contained" sx={{ mt: 3, width: 'calc(100% - 150px)', height: '3rem', fontSize: '1rem' }}>
