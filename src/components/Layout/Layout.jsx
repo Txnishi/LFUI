@@ -8,6 +8,11 @@ import React, { useState } from "react";
 const Layout = () => {
 
   const { pathname } = useLocation();
+  const [selectedDashboard, setSelectedDashboard] = useState('npcldashboard');
+  const [npclLogoWidth, setNpclLogoWidth] = useState("90px");
+  const [jdvvnlLogoWidth, setJdvvnlLogoWidth] = useState("70px");
+
+
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleLogout = () => {
@@ -15,16 +20,23 @@ const Layout = () => {
   };
 
 
+  const getDashboardImage = (npclLogoWidth, jdvvnlLogoWidth) => {
+    if (pathname === '/' || selectedDashboard === 'npcldashboard') {
+      return { path: '/npcl.png', width: npclLogoWidth };
+    } else if (selectedDashboard === 'jdvvnldashboard') {
+      return { path: '/jd_logo.png', width: jdvvnlLogoWidth };
+    }
+  };
+
+  const dashboardImage = getDashboardImage(npclLogoWidth, jdvvnlLogoWidth);
+
+
   return (
     <div className={css.container}>
-      {/* <div className={css.cont}>
-
-      </div> */}
-      <Sidebar />
+      <Sidebar setSelectedDashboard={setSelectedDashboard} />
 
 
-      {/* making the dashboard as the default route */}
-      {pathname === "/" && <Navigate to="/dashboard" />}
+      {pathname === "/" && <Navigate to="/npcldashboard" />}
 
 
       <div className={css.dashboard}>
@@ -38,12 +50,12 @@ const Layout = () => {
 
           <span>{moment().format("dddd, Do MMM YYYY")}</span>
 
-          <div /*className={css.searchBar}*/>
-            {/* <BiSearch size={20} /> */}
+          <div >
+
             <img
-              width="200px"
-              src="/logo.png" alt="layour-logo" />
-            {/* <input type="text" placeholder="Search" /> */}
+              width={dashboardImage.width}
+              src={dashboardImage.path}
+              alt="layour-logo" />
           </div>
 
 

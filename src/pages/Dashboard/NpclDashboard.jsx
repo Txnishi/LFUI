@@ -5,7 +5,7 @@ import { cardsData, groupNumber } from '../../data';
 import css from './Dashboard.module.css';
 
 
-const Dashboard = () => {
+const NpclDashboard = () => {
 
   const [receivedData, setReceivedData] = useState(null);
   const handleData = (data) => {
@@ -77,4 +77,4 @@ const Dashboard = () => {
   </div>
 }
 
-export default Dashboard
+export default NpclDashboard

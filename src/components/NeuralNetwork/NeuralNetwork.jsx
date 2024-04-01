@@ -142,26 +142,34 @@ export default function NeuralNetwork() {
     })
 
     return (
-        <group ref={groupRef} dispose={null}>
+        <>
             <ambientLight intensity={0.1} />
+            <directionalLight intensity={3.5} position={[3, 4.5, -3.25]} />
+            <group ref={groupRef} dispose={null}>
+                {/* <ambientLight intensity={0.1} />
             <directionalLight intensity={3.5} position={[3, 4.5, -3.25]} />
             <mesh scale={7}>
                 <sphereGeometry args={[1, 64, 64]} />
                 <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
-            </mesh>
-            <points>
-                <bufferGeometry ref={particlesRef}>
-                    <bufferAttribute attach="attributes-position" count={particleCount} array={particlePositions} itemSize={3} />
-                </bufferGeometry>
-                <pointsMaterial color={'white'} size={3} blending={AdditiveBlending} transparent={true} sizeAttenuation={false} />
-            </points>
-            <lineSegments>
-                <bufferGeometry ref={linesGeometryRef}>
-                    <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
-                    <bufferAttribute attach="attributes-color" count={colors.length / 3} array={colors} itemSize={3} />
-                </bufferGeometry>
-                <lineBasicMaterial vertexColors={true} blending={AdditiveBlending} transparent={true} />
-            </lineSegments>
-        </group>
+            </mesh> */}
+                <mesh scale={7} rotation={[0, 0, 0]}>  <sphereGeometry args={[1, 64, 64]} />
+                    <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
+                </mesh>
+
+                <points>
+                    <bufferGeometry ref={particlesRef}>
+                        <bufferAttribute attach="attributes-position" count={particleCount} array={particlePositions} itemSize={3} />
+                    </bufferGeometry>
+                    <pointsMaterial color={'white'} size={3} blending={AdditiveBlending} transparent={true} sizeAttenuation={false} />
+                </points>
+                <lineSegments>
+                    <bufferGeometry ref={linesGeometryRef}>
+                        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+                        <bufferAttribute attach="attributes-color" count={colors.length / 3} array={colors} itemSize={3} />
+                    </bufferGeometry>
+                    <lineBasicMaterial vertexColors={true} blending={AdditiveBlending} transparent={true} />
+                </lineSegments>
+            </group>
+        </>
     )
 }

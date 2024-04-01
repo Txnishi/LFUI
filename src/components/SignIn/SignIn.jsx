@@ -40,7 +40,7 @@ export default function SignIn({ onSignUp }) {
 
         if (email === 'shubham.bhatt@radius.co.in' && password === 'password1') {
             console.log('Login successful');
-            navigate('/layout/dashboard');
+            navigate('/layout/npcldashboard');
         } else {
             console.log('Invalid email or password');
         }
