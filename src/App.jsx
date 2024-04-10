@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout';
 import Admin from './pages/Admin/Admin';
 import Login from './pages/Login/Login';
 import NpclDashboard from './pages/Dashboard/NpclDashboard';
+import JdvNLDashboard from './pages/Dashboard/JdvNLDashboard';
 import Experiment from './pages/Experiment/Experiment';
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
           {/* Routes when logged in */}
           <Route path="/layout/*" element={<Layout />}>
             <Route path="npcldashboard" element={<NpclDashboard />} />
+            <Route path="jdvvnldashboard" element={<JdvNLDashboard />} />
             <Route path="admin" element={<Admin />} />
             <Route path="experiment" element={<Experiment />} />
             {/* Redirect any unmatched URLs to the dashboard */}

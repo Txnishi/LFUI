@@ -1,6 +1,5 @@
 import moment from "moment/moment";
 import css from "./Layout.module.css";
-// import { BiSearch } from "react-icons/bi";
 import Sidebar from "../Sidebar/Sidebar";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import React, { useState } from "react";
@@ -25,15 +24,24 @@ const Layout = () => {
       return { path: '/npcl.png', width: npclLogoWidth };
     } else if (selectedDashboard === 'jdvvnldashboard') {
       return { path: '/jd_logo.png', width: jdvvnlLogoWidth };
+    } else {
+      return { path: '/logo.png', width: npclLogoWidth };
     }
   };
 
   const dashboardImage = getDashboardImage(npclLogoWidth, jdvvnlLogoWidth);
 
+  if (selectedDashboard === 'jdvvnldashboard') {
+    console.log("JDVVNL DASHBOARD WOKRING");
+  } else {
+    console.log("NPCL DASHBOARD");
+  }
+
+
 
   return (
     <div className={css.container}>
-      <Sidebar setSelectedDashboard={setSelectedDashboard} />
+      <Sidebar setSelectedDashboard={setSelectedDashboard} selectedDashboard={selectedDashboard} />
 
 
       {pathname === "/" && <Navigate to="/npcldashboard" />}
@@ -62,15 +70,6 @@ const Layout = () => {
           <div>
             <button className={`${css.logout} ${css.l_bt}`} onClick={() => setShowConfirmation(true)}><span>Sign out</span></button>
           </div>
-
-          {/* <div className={css.profile}>
-            <img src="./profile.png" alt="logo image" />
-            <div className={css.details}>
-              <span>Denis Steven</span>
-              <span>devissteven@gmail.com</span>
-            </div>
-          </div> */}
-
 
         </div>
 

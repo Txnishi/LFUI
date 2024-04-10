@@ -16,6 +16,13 @@ const AdminPage = () => {
                 </div>
 
             </div>
+            <div className={`${css.container}  grey-container`} >
+
+                <div className={`${css.customButton}`}>
+                    <span><button className={`${css.pred}`}>Prediction</button></span>
+                </div>
+
+            </div>
         </div>
     )
 }

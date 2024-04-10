@@ -10,8 +10,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { getDailyChartData } from '../../data/ChartData';
-import { getMonthlyChartData } from '../../data/ChartData';
+import { getDailyChartData, getMonthlyChartData } from '../../data/ChartData';
+// import { getJdvnlDailyChartData } from '../../data/ChartData';
 import axios from "axios";
 import { cardsData as initialCardsData } from '../../data/index';
 
@@ -38,6 +38,8 @@ const Statistics = ({ handleData, label }) => {
     const [data, setData] = useState({});
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
+    // const [circleOption, setCircleOption] = useState([]);
+    // const [selectedCircle, setSelectedCircle] = useState('');
     const [uomData, setUomData] = useState('');
 
     const [actualData, setActualData] = useState([]);
@@ -62,8 +64,6 @@ const Statistics = ({ handleData, label }) => {
     const [predMonthlySum, setPredMonthlySum] = useState('');
     const [predMaxDate, setPredMaxDate] = useState('');
     const [predMonthlyMaxDemand, setPredMonthlyMaxDemand] = useState('');
-
-
 
     // const [value, setValue] = useState(dayjs.extend(customParseFormat));
 
@@ -93,15 +93,46 @@ const Statistics = ({ handleData, label }) => {
 
 
 
+    // const circleData = async () => {
+    //     try {
+
+    //         const circleInfo = await postJdvnlCircleData();
+    //         console.log("circle")
+
+    //         if (circleInfo) {
+
+    //             setCircleOption(circleInfo.circleList);
+    //             setSelectedCircle(Object.keys(circleInfo.circleList)[0]);
+    //             console.log(selectedCircle);
+    //         }
+
+
+    //     } catch (error) {
+    //         console.error('Error fetching circle data:', error);
+    //     }
+    // };
+
+
+
     const sensorData = async () => {
         try {
+            // if (selectedDashboard === 'npcldashboard') {
+            //     ans = await axios.get('http://13.127.57.185:5000/get_sensorList');
+            //     console.log("ans => ", ans.data.data)
+
+            // } else {
+            //     ans = await axios.get('http://13.127.57.185:5000/get_jdvvnlSensorList');
+            // }
+
             const ans = await axios.get('http://13.127.57.185:5000/get_sensorList');
+
+
             const gotData = ans.data;
 
             if (gotData && gotData.sensorList && gotData.sensorList.length > 0) {
                 const uomData = gotData.sensorList[0]['UOM'];
                 setUomData(uomData);
-                console.log(gotData);
+                console.log("sensor data ", gotData);
 
                 setOptions(gotData.sensorList);
                 setSelectedOption(gotData.sensorList[0]['uuid']);
@@ -127,6 +158,7 @@ const Statistics = ({ handleData, label }) => {
 
 
     useEffect(() => {
+        // circleData();
         if (!selectedOption) {
             sensorData();
         }
@@ -142,6 +174,8 @@ const Statistics = ({ handleData, label }) => {
             try {
 
                 let collectedData = "NULL";
+
+
                 if (label == "Daily Summary Dashboard") {
                     collectedData = await getDailyChartData(selectedOption, dateValue);
 
@@ -162,6 +196,31 @@ const Statistics = ({ handleData, label }) => {
                     setActMaxDate(collectedData.act_max_date);
                     setActMonthlyMaxDemand(collectedData.act_max_date_value);
                     setActMonthlySum(collectedData.act_monthly_sum);
+
+
+                    //JdvVNL
+                    // if (label == "Daily Summary Dashboard") {
+                    //     collectedData = await getJdvnlDailyChartData(selectedOption, dateValue);
+
+                    //     setPredDailyDemand(collectedData.pred_max_value);
+                    //     setPredMaxHour(collectedData.pred_max_hour);
+                    //     setPredDailySum(collectedData.pred_daily_sum);
+
+                    //     setActualDailyDemand(collectedData.actual_max_value);
+                    //     setActualMaxHour(collectedData.actual_max_hour);
+                    //     setActualDailySum(collectedData.actual_daily_sum);
+                    // } else {
+                    //     collectedData = await getMonthlyChartData(selectedOption, monthValue);
+
+                    //     setPredMonthlyMaxDemand(collectedData.pred_max_date_value);
+                    //     setPredMaxDate(collectedData.pred_max_date);
+                    //     setPredMonthlySum(collectedData.pred_monthly_sum);
+
+                    //     setActMaxDate(collectedData.act_max_date);
+                    //     setActMonthlyMaxDemand(collectedData.act_max_date_value);
+                    //     setActMonthlySum(collectedData.act_monthly_sum);
+                    // }
+                    console.log("chartData")
                 }
 
                 if (collectedData === "NULL") {
@@ -235,17 +294,22 @@ const Statistics = ({ handleData, label }) => {
             <div className={`${css.cards} grey-container`}>
                 <div>
 
-                    {/* <div className={css.card}>
-                        <select>
-                            <option value="1">sensor 1</option>
-                            <option value="2">sensor 2</option>
-                        </select>
-                    </div> */}
+                    {/* {selectedDashboard === 'jdvvnldashboard' && (
+                        <div id="circleSelection" className={css.card}>
+                            <select value={selectedCircle} onChange={(e) => setSelectedCircle(e.target.value)}>
+                                {Object.entries(circleOption).map(([circleId, circleName]) => (
+                                    <option key={circleId} value={circleId}>
+                                        {circleName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )} */}
                     <div className={css.card}>
                         <select id="dynamicSelect" value={selectedOption} onChange={handleSelectChange}>
                             {/* <option value="">Select Sensor</option> */}
                             {options.map((option) => (
-                                <option value={option.uuid}>
+                                <option key={option.uuid} value={option.uuid}>
                                     {option.sensorName}
                                 </option>
                             ))}

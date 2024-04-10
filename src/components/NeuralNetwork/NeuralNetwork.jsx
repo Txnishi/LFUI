@@ -144,7 +144,7 @@ export default function NeuralNetwork() {
     return (
         <>
             <ambientLight intensity={0.1} />
-            <directionalLight intensity={3.5} position={[3, 4.5, -3.25]} />
+            <directionalLight intensity={3.5} position={[18, 19, -1.25]} />
             <group ref={groupRef} dispose={null}>
                 {/* <ambientLight intensity={0.1} />
             <directionalLight intensity={3.5} position={[3, 4.5, -3.25]} />

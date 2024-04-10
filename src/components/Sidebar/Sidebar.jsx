@@ -10,7 +10,7 @@ import { AiOutlineExperiment } from "react-icons/ai";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 // import { MdAdminPanelSettings } from "react-icons/md";
 // import { MdOulineAdminPanelSettings } from "react-icons/md";
-const Sidebar = ({ setSelectedDashboard }) => {
+const Sidebar = ({ setSelectedDashboard, selectedDashboard }) => {
 
     const handleDashboardSelect = (dashboard) => {
         setSelectedDashboard(dashboard);
@@ -18,30 +18,30 @@ const Sidebar = ({ setSelectedDashboard }) => {
 
     return (
         <div className={css.container}>
-
             <img src={'/logo.png'} alt="sideBar-logo" className={css.logo} />
 
-
             <div className={css.menu}>
-                {/* <NavLink to="login" className={css.item} title={'Login'}>
-                    <RiLoginBoxLine size={30} />
 
-                </NavLink> */}
-                <NavLink to="npcldashboard" className={css.item} title={"NPCL Dashboard"} onClick={() => handleDashboardSelect('npcldashboard')}>
+                <NavLink
+                    to="npcldashboard"
+                    className={`${css.item} ${selectedDashboard === 'npcldashboard' ? css.active : ''}`}
+                    title={'NPCL Dashboard'}
+                    onClick={() => handleDashboardSelect('npcldashboard')}
+                >
                     <MdSpaceDashboard size={30} />
                 </NavLink>
 
-                <NavLink to="jdvvnldashboard" className={css.item} title={"JdVVNL Dashboard"} onClick={() => handleDashboardSelect('jdvvnldashboard')}>
+                <NavLink to="jdvvnldashboard" className={`${css.item} ${selectedDashboard === 'jdvvnldashboard' ? css.active : ''}`} title={"JdVVNL Dashboard"} onClick={() => handleDashboardSelect('jdvvnldashboard')}>
                     <MdOutlineSpaceDashboard size={31} />
                 </NavLink>
 
-                <NavLink to="admin" className={css.item} title={'Admin'}>
+                <NavLink to="admin" className={`${css.item} ${selectedDashboard === 'jdvvnldashboard' ? css.active : ''}`} onClick={() => handleDashboardSelect('admin')} title={'Admin'}>
                     <RiAdminFill size={30} />
                     {/* <MdOutlineAdminPanelSettings size={32}/> */}
                     {/* <MdAdminPanelSettings size={30}/> */}
                 </NavLink>
 
-                <NavLink to="experiment" className={css.item} title={'Experiment'}>
+                <NavLink to="experiment" className={`${css.item} ${selectedDashboard === 'jdvvnldashboard' ? css.active : ''}`} onClick={() => handleDashboardSelect('experiment')} title={'Experiment'}>
                     <AiFillExperiment size={30} />
 
                 </NavLink>

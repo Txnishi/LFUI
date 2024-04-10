@@ -1,6 +1,6 @@
 import Orders from '../../components/Orders/Orders';
 import { useState } from 'react';
-import Statistics from '../../components/Statistics/Statistics';
+import JdvvnlStatistics from '../../components/Statistics/JdvvnlStatistics';
 import { cardsData, groupNumber } from '../../data';
 import css from './Dashboard.module.css';
 
@@ -71,7 +71,7 @@ const JdvNLDashboard = () => {
 
 
 
-            <Statistics label={buttonLabel} handleData={handleData} />
+            <JdvvnlStatistics label={buttonLabel} handleData={handleData} />
 
         </div>
     </div>

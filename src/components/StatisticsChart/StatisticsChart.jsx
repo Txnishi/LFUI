@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react'
 import * as echarts from 'echarts'
+import { color } from 'three/examples/jsm/nodes/Nodes.js';
 
 
 
@@ -167,7 +168,7 @@ const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chart
     const option = {
 
         color: ['var(--orange)', 'blue'],
-        animationDuration: 3000,
+        animationDuration: 10000,
 
         toolbox: {
             feature: {
@@ -188,9 +189,10 @@ const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chart
         tooltip: {
             trigger: "axis",
             axisPointer: {
-                type: "cross"
+                type: "cross",
+                color: 'white',
             },
-            backgroundColor: "rgba(0, 0, 0, 0.59)",
+            backgroundColor: "rgba(0, 0, 0, 0.89)",
             borderWidth: 0,
         },
         grid: {
@@ -403,7 +405,7 @@ const StatisticsChart = ({ lab, uom, actualData, predictedData, chartTime, chart
                 emphasis: {
                     focus: "series",
                 },
-                showSymbol: true,
+                showSymbol: false,
                 // data: [28000, 19000, 32000, 18000, 41000, 30000, 26000,28000, 19000, 32000, 18000, 41000, 30000, 26000,28000, 19000, 32000, 18000, 41000, 30000, 26000, 19000, 34000, 29000]
                 data: predictedData
             },
