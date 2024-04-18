@@ -51,6 +51,8 @@ export const postJdvnlSensorList = async (selectedCircle) => {
 };
 
 export const postJdvnlDailyChartData = async (selectedOptionId, value) => {
+
+    console.log("postJdvnlDailyChartData called with:", selectedOptionId, value);
     try {
         const response = await axios({
             method: 'post',
@@ -61,9 +63,11 @@ export const postJdvnlDailyChartData = async (selectedOptionId, value) => {
             }
         })
 
+        console.log("Recieved data from API:", response.data);
+
         return response.data;
     } catch (error) {
-        console.error('Error fetching sensor list:', error);
+        console.error('Error in :postJdvnlDailyChartData', error);
         return null;
     }
 }

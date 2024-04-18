@@ -1,0 +1,45 @@
+.select__control {
+    background-color: #1f1f1f !important;
+    border-color: #383838 !important;
+    color: #cfcccc !important;
+    border-radius: 4px !important;
+    font-size: 23px !important;
+    height: 40px !important;
+    width: 400px;
+}
+
+.select__menu {
+    background-color: #292929 !important;
+    border-color: #383838 !important;
+    color: #cfcccc !important;
+}
+
+.selectoption {
+    background-color: #1f1f1f !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+/* .selectoption:hover {
+    background-color: #b93d3d !important;
+    color: #090909 !important;
+} */
+
+.selectoption span {
+    font-weight: bold !important;
+    margin-right: 8px !important;
+}
+
+.select__option--is-selected {
+    background-color: #2b2b2b !important;
+    color: #cfcccc !important;
+}
+
+.select__indicator-separator {
+    background-color: #383838 !important;
+}
+
+.select__indicators {
+    background-color: #1f1f1f !important;
+}
