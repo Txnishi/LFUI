@@ -53,3 +53,8 @@
 .select__indicators {
     background-color: #1f1f1f !important;
 }
+
+.select__placeholder {
+    color: #bbb8b8 !important;
+
+}
